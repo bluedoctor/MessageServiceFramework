@@ -69,7 +69,7 @@
     <None Include="PDF.NET.EF.2017.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PWMISServiceBasic\ServiceBasic.csproj">
+    <ProjectReference Include="..\..\PWMISServiceBasic\ServiceBasic.csproj">
       <Project>{28bf9b80-4925-4d5e-ae6c-5748f753f197}</Project>
       <Name>ServiceBasic</Name>
     </ProjectReference>

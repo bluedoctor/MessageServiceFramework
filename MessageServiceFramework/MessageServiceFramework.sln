@@ -5,33 +5,33 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageFramework", "MessageFramework", "{6BDD2287-E757-425F-BC83-8B913D295D32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePublisherLib", "MessagePublisherLib\MessagePublisherLib.csproj", "{F8004CB1-9753-4220-8998-69CAE0CE4BEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePublisherLib", "..\MessagePublisherLib\MessagePublisherLib.csproj", "{F8004CB1-9753-4220-8998-69CAE0CE4BEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePublishService", "MessagePublishService\MessagePublishService.csproj", "{143215C2-0C3B-402D-9F2D-04C8A7881FE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePublishService", "..\MessagePublishService\MessagePublishService.csproj", "{143215C2-0C3B-402D-9F2D-04C8A7881FE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSubscriber", "MessageSubscriber\MessageSubscriber.csproj", "{9CC70AD7-E7FB-4A7D-80EC-8DB25DE1B4B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSubscriber", "..\MessageSubscriber\MessageSubscriber.csproj", "{9CC70AD7-E7FB-4A7D-80EC-8DB25DE1B4B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSubscriberLib", "MessageSubscriberLib\MessageSubscriberLib.csproj", "{F652D7CA-AF55-491C-9B1E-E159E9771A72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSubscriberLib", "..\MessageSubscriberLib\MessageSubscriberLib.csproj", "{F652D7CA-AF55-491C-9B1E-E159E9771A72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePublisher", "MessagePublisher\MessagePublisher.csproj", "{ABDA2F09-3209-4B5A-A860-A289EC12E72B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePublisher", "..\MessagePublisher\MessagePublisher.csproj", "{ABDA2F09-3209-4B5A-A860-A289EC12E72B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceFramework", "ServiceFramework", "{1CA9639A-38EF-47EB-94B4-C1EE8A14FAF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceClient", "PWMISServiceClient\ServiceClient.csproj", "{A0D23B66-81B1-49CD-9A79-64509F6BB837}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceClient", "..\PWMISServiceClient\ServiceClient.csproj", "{A0D23B66-81B1-49CD-9A79-64509F6BB837}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceGroup", "PWMISServiceGroup\ServiceGroup.csproj", "{5731C135-7941-4835-9CF6-F58C9A280F0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceGroup", "..\PWMISServiceGroup\ServiceGroup.csproj", "{5731C135-7941-4835-9CF6-F58C9A280F0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceRuntime", "PWMISServiceRuntime\ServiceRuntime.csproj", "{6E9892E2-2B86-4406-AD2B-E047A66011FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceRuntime", "..\PWMISServiceRuntime\ServiceRuntime.csproj", "{6E9892E2-2B86-4406-AD2B-E047A66011FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBasic", "PWMISServiceBasic\ServiceBasic.csproj", "{28BF9B80-4925-4D5E-AE6C-5748F753F197}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBasic", "..\PWMISServiceBasic\ServiceBasic.csproj", "{28BF9B80-4925-4D5E-AE6C-5748F753F197}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Host", "Host", "{34F3462F-2D79-4055-B2CF-4DA9971F602E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "PWMISServiceHost\ServiceHost.csproj", "{4B3A5FAB-2120-47C9-8B72-329355CD48E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "..\PWMISServiceHost\ServiceHost.csproj", "{4B3A5FAB-2120-47C9-8B72-329355CD48E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A8E4A3EA-87F6-4B97-AC99-2C5089E98347}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnterpriceFrameworkCommon", "MSFCommon\EnterpriceFrameworkCommon.csproj", "{2A9A3A85-D2F6-44DE-B7E8-5CDCA17BCE23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnterpriceFrameworkCommon", "..\MSFCommon\EnterpriceFrameworkCommon.csproj", "{2A9A3A85-D2F6-44DE-B7E8-5CDCA17BCE23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00753E38-603F-499E-97C6-47DC428F2758}"
 	ProjectSection(SolutionItems) = preProject
@@ -41,23 +41,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{15858149-F73D-4D98-94E8-A9A5955D3D04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Test\Model\Model.csproj", "{7A8AF609-14D8-49FF-9825-830803933703}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "..\Test\Model\Model.csproj", "{7A8AF609-14D8-49FF-9825-830803933703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Test\Service\Service.csproj", "{4C3C2094-5CB0-4199-9C1E-BF7F6608782A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "..\Test\Service\Service.csproj", "{4C3C2094-5CB0-4199-9C1E-BF7F6608782A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinClient", "Test\WinClient\WinClient.csproj", "{F13EE989-AA43-4E9D-A152-DEEA7B972EE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinClient", "..\Test\WinClient\WinClient.csproj", "{F13EE989-AA43-4E9D-A152-DEEA7B972EE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorTerminal", "MonitorTerminal\MonitorTerminal.csproj", "{E8F2ED88-4730-4DB3-AF42-D42DC4C79E56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorTerminal", "..\MonitorTerminal\MonitorTerminal.csproj", "{E8F2ED88-4730-4DB3-AF42-D42DC4C79E56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorModel", "MonitorModel\MonitorModel.csproj", "{E55F10B3-F8F4-4EB1-9E5E-DA44D506E796}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorModel", "..\MonitorModel\MonitorModel.csproj", "{E55F10B3-F8F4-4EB1-9E5E-DA44D506E796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorPresenters", "MonitorPresenters\MonitorPresenters.csproj", "{3F671F88-58B6-40A6-91E9-BBCF2967E056}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorPresenters", "..\MonitorPresenters\MonitorPresenters.csproj", "{3F671F88-58B6-40A6-91E9-BBCF2967E056}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Monitor", "Monitor", "{9F667EEE-8461-44A4-8986-7FA3477558BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorServiceRuntime", "MonitorServiceRuntime\MonitorServiceRuntime.csproj", "{AF574CF9-8589-4048-8CEB-473AB40F7365}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorServiceRuntime", "..\MonitorServiceRuntime\MonitorServiceRuntime.csproj", "{AF574CF9-8589-4048-8CEB-473AB40F7365}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOC", "AOPIOC\IOC\IOC.csproj", "{EBD3FF59-DB9C-4F46-9C81-BBCE8210878D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOC", "..\AOPIOC\IOC\IOC.csproj", "{EBD3FF59-DB9C-4F46-9C81-BBCE8210878D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleRoute", "ModuleRoute\ModuleRoute.csproj", "{D34A99E9-B1A9-4477-A89F-7FBEC1E17E35}"
 EndProject
@@ -79,82 +79,82 @@ Global
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs23
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = AOPIOC\\IOC\\IOC.csproj
+		SccProjectUniqueName1 = ..\\AOPIOC\\IOC\\IOC.csproj
 		SccProjectTopLevelParentUniqueName1 = MessageServiceFramework.sln
 		SccProjectName1 = ../AOPIOC/IOC
-		SccLocalPath1 = AOPIOC\\IOC
-		SccProjectUniqueName2 = MessagePublisherLib\\MessagePublisherLib.csproj
+		SccLocalPath1 = ..\\AOPIOC\\IOC
+		SccProjectUniqueName2 = ..\\MessagePublisherLib\\MessagePublisherLib.csproj
 		SccProjectTopLevelParentUniqueName2 = MessageServiceFramework.sln
 		SccProjectName2 = ../MessagePublisherLib
-		SccLocalPath2 = MessagePublisherLib
-		SccProjectUniqueName3 = MessagePublishService\\MessagePublishService.csproj
+		SccLocalPath2 = ..\\MessagePublisherLib
+		SccProjectUniqueName3 = ..\\MessagePublishService\\MessagePublishService.csproj
 		SccProjectTopLevelParentUniqueName3 = MessageServiceFramework.sln
 		SccProjectName3 = ../MessagePublishService
-		SccLocalPath3 = MessagePublishService
-		SccProjectUniqueName4 = MessageSubscriber\\MessageSubscriber.csproj
+		SccLocalPath3 = ..\\MessagePublishService
+		SccProjectUniqueName4 = ..\\MessageSubscriber\\MessageSubscriber.csproj
 		SccProjectTopLevelParentUniqueName4 = MessageServiceFramework.sln
 		SccProjectName4 = ../MessageSubscriber
-		SccLocalPath4 = MessageSubscriber
-		SccProjectUniqueName5 = MessageSubscriberLib\\MessageSubscriberLib.csproj
+		SccLocalPath4 = ..\\MessageSubscriber
+		SccProjectUniqueName5 = ..\\MessageSubscriberLib\\MessageSubscriberLib.csproj
 		SccProjectTopLevelParentUniqueName5 = MessageServiceFramework.sln
 		SccProjectName5 = ../MessageSubscriberLib
-		SccLocalPath5 = MessageSubscriberLib
-		SccProjectUniqueName6 = MessagePublisher\\MessagePublisher.csproj
+		SccLocalPath5 = ..\\MessageSubscriberLib
+		SccProjectUniqueName6 = ..\\MessagePublisher\\MessagePublisher.csproj
 		SccProjectTopLevelParentUniqueName6 = MessageServiceFramework.sln
 		SccProjectName6 = ../MessagePublisher
-		SccLocalPath6 = MessagePublisher
-		SccProjectUniqueName7 = PWMISServiceClient\\ServiceClient.csproj
+		SccLocalPath6 = ..\\MessagePublisher
+		SccProjectUniqueName7 = ..\\PWMISServiceClient\\ServiceClient.csproj
 		SccProjectTopLevelParentUniqueName7 = MessageServiceFramework.sln
 		SccProjectName7 = ../PWMISServiceClient
-		SccLocalPath7 = PWMISServiceClient
-		SccProjectUniqueName8 = PWMISServiceGroup\\ServiceGroup.csproj
+		SccLocalPath7 = ..\\PWMISServiceClient
+		SccProjectUniqueName8 = ..\\PWMISServiceGroup\\ServiceGroup.csproj
 		SccProjectTopLevelParentUniqueName8 = MessageServiceFramework.sln
 		SccProjectName8 = ../PWMISServiceGroup
-		SccLocalPath8 = PWMISServiceGroup
-		SccProjectUniqueName9 = PWMISServiceRuntime\\ServiceRuntime.csproj
+		SccLocalPath8 = ..\\PWMISServiceGroup
+		SccProjectUniqueName9 = ..\\PWMISServiceRuntime\\ServiceRuntime.csproj
 		SccProjectTopLevelParentUniqueName9 = MessageServiceFramework.sln
 		SccProjectName9 = ../PWMISServiceRuntime
-		SccLocalPath9 = PWMISServiceRuntime
-		SccProjectUniqueName10 = PWMISServiceBasic\\ServiceBasic.csproj
+		SccLocalPath9 = ..\\PWMISServiceRuntime
+		SccProjectUniqueName10 = ..\\PWMISServiceBasic\\ServiceBasic.csproj
 		SccProjectTopLevelParentUniqueName10 = MessageServiceFramework.sln
 		SccProjectName10 = ../PWMISServiceBasic
-		SccLocalPath10 = PWMISServiceBasic
-		SccProjectUniqueName11 = PWMISServiceHost\\ServiceHost.csproj
+		SccLocalPath10 = ..\\PWMISServiceBasic
+		SccProjectUniqueName11 = ..\\PWMISServiceHost\\ServiceHost.csproj
 		SccProjectTopLevelParentUniqueName11 = MessageServiceFramework.sln
 		SccProjectName11 = ../PWMISServiceHost
-		SccLocalPath11 = PWMISServiceHost
-		SccProjectUniqueName12 = MSFCommon\\EnterpriceFrameworkCommon.csproj
+		SccLocalPath11 = ..\\PWMISServiceHost
+		SccProjectUniqueName12 = ..\\MSFCommon\\EnterpriceFrameworkCommon.csproj
 		SccProjectTopLevelParentUniqueName12 = MessageServiceFramework.sln
 		SccProjectName12 = ../MSFCommon
-		SccLocalPath12 = MSFCommon
-		SccProjectUniqueName13 = Test\\Model\\Model.csproj
+		SccLocalPath12 = ..\\MSFCommon
+		SccProjectUniqueName13 = ..\\Test\\Model\\Model.csproj
 		SccProjectTopLevelParentUniqueName13 = MessageServiceFramework.sln
 		SccProjectName13 = ../Test/Model
-		SccLocalPath13 = Test\\Model
-		SccProjectUniqueName14 = Test\\Service\\Service.csproj
+		SccLocalPath13 = ..\\Test\\Model
+		SccProjectUniqueName14 = ..\\Test\\Service\\Service.csproj
 		SccProjectTopLevelParentUniqueName14 = MessageServiceFramework.sln
 		SccProjectName14 = ../Test/Service
-		SccLocalPath14 = Test\\Service
-		SccProjectUniqueName15 = Test\\WinClient\\WinClient.csproj
+		SccLocalPath14 = ..\\Test\\Service
+		SccProjectUniqueName15 = ..\\Test\\WinClient\\WinClient.csproj
 		SccProjectTopLevelParentUniqueName15 = MessageServiceFramework.sln
 		SccProjectName15 = ../Test/WinClient
-		SccLocalPath15 = Test\\WinClient
-		SccProjectUniqueName16 = MonitorTerminal\\MonitorTerminal.csproj
+		SccLocalPath15 = ..\\Test\\WinClient
+		SccProjectUniqueName16 = ..\\MonitorTerminal\\MonitorTerminal.csproj
 		SccProjectTopLevelParentUniqueName16 = MessageServiceFramework.sln
 		SccProjectName16 = ../MonitorTerminal
-		SccLocalPath16 = MonitorTerminal
-		SccProjectUniqueName17 = MonitorModel\\MonitorModel.csproj
+		SccLocalPath16 = ..\\MonitorTerminal
+		SccProjectUniqueName17 = ..\\MonitorModel\\MonitorModel.csproj
 		SccProjectTopLevelParentUniqueName17 = MessageServiceFramework.sln
 		SccProjectName17 = ../MonitorModel
-		SccLocalPath17 = MonitorModel
-		SccProjectUniqueName18 = MonitorPresenters\\MonitorPresenters.csproj
+		SccLocalPath17 = ..\\MonitorModel
+		SccProjectUniqueName18 = ..\\MonitorPresenters\\MonitorPresenters.csproj
 		SccProjectTopLevelParentUniqueName18 = MessageServiceFramework.sln
 		SccProjectName18 = ../MonitorPresenters
-		SccLocalPath18 = MonitorPresenters
-		SccProjectUniqueName19 = MonitorServiceRuntime\\MonitorServiceRuntime.csproj
+		SccLocalPath18 = ..\\MonitorPresenters
+		SccProjectUniqueName19 = ..\\MonitorServiceRuntime\\MonitorServiceRuntime.csproj
 		SccProjectTopLevelParentUniqueName19 = MessageServiceFramework.sln
 		SccProjectName19 = ../MonitorServiceRuntime
-		SccLocalPath19 = MonitorServiceRuntime
+		SccLocalPath19 = ..\\MonitorServiceRuntime
 		SccProjectUniqueName20 = ModuleRoute\\ModuleRoute.csproj
 		SccProjectTopLevelParentUniqueName20 = MessageServiceFramework.sln
 		SccProjectName20 = ModuleRoute
@@ -455,6 +455,6 @@ Global
 		{25D29003-143C-4AD6-AE1D-84F72B2EB6E5} = {88574A73-7E9C-43DD-ACA4-D3F42D61E7A9}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = PWMISServiceHost\ServiceHost.csproj
+		StartupItem = ..\PWMISServiceHost\ServiceHost.csproj
 	EndGlobalSection
 EndGlobal
