@@ -392,6 +392,13 @@
             IP信息类，判断IP是否为内网IP
             </summary>
         </member>
+        <member name="M:PWMIS.EnterpriseFramework.Common.IpUtility.IsInner(System.String)">
+            <summary>
+            判断IP地址是否为内网IP地址
+            </summary>
+            <param name="ip"></param>
+            <returns></returns>
+        </member>
         <member name="M:PWMIS.EnterpriseFramework.Common.IpUtility.GetIpNum(System.String)">
             把IP地址转换为Long型数字
         </member>

@@ -31,7 +31,7 @@ namespace ServiceSample
 
                 CurrentContext.PublishData(DateTime.Now); //e.SignalTime
                 publishCount++;
-                Console.WriteLine("AlarmClockService Publish Count:{0}",publishCount);
+                Console.WriteLine("AlarmClock Service Publish Count:{0},left times:{1}",publishCount,10- publishCount);
             }
            
         }
@@ -64,11 +64,11 @@ namespace ServiceSample
                 //本方法执行完成，将结束事件推送。如果你在其它线程上执行耗时的任务，需要在这里阻塞任务直到执行完成。
                 while (true)
                 {
-                    //响铃100次，闹钟停止工作
-                    if (publishCount > 100)
+                    //响铃10次，闹钟停止工作
+                    if (publishCount > 10)
                     {
                         timer.Stop();
-                        Console.WriteLine("[{0}] AlarmClockService Timer Stoped. ", DateTime.Now);
+                        Console.WriteLine("[{0}] AlarmClock Service Timer Stoped. ", DateTime.Now);
                         break;
                     }
                     System.Threading.Thread.Sleep(1000);

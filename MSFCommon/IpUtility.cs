@@ -9,8 +9,12 @@ namespace PWMIS.EnterpriseFramework.Common
     /// </summary>
     public class IpUtility
     {
-        //判断IP地址是否为内网IP地址
-
+        
+        /// <summary>
+        /// 判断IP地址是否为内网IP地址
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
         public bool IsInner(String ip)
         {
 
