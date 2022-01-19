@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using PWMIS.EnterpriseFramework.Common;
-using IBMP.AOP;
+
 
 namespace TranstarAuction.Model.AuctionMain
 {
@@ -424,7 +424,7 @@ namespace TranstarAuction.Model.AuctionMain
     }
 
 
-    public class AttentionCarNotifyModel : NotifyBase, IAttentionCarModel
+    public class AttentionCarNotifyModel : NotifyChangedModel, IAttentionCarModel
     {
         public DataChangeEntitys DataChangeEntitys { get; set; }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using PWMIS.EnterpriseFramework.Common;
-using IBMP.AOP;
+
 
 namespace TranstarAuction.Model.AuctionMain
 {
@@ -51,7 +51,7 @@ namespace TranstarAuction.Model.AuctionMain
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 
-    public class MyFriendNotifyModel:NotifyBase,IMyFriendModel
+    public class MyFriendNotifyModel: NotifyChangedModel, IMyFriendModel
     {
         int _SellerUId;
         public int SellerUId

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-using IBMP.AOP;
 using PWMIS.EnterpriseFramework.Common;
 
 namespace TranstarAuction.Model.AuctionMain
@@ -148,7 +146,7 @@ namespace TranstarAuction.Model.AuctionMain
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 
-    public class BuyCarNotifyModel : NotifyBase, IBuyCarModel
+    public class BuyCarNotifyModel : NotifyChangedModel, IBuyCarModel
     {
         int _OrderId;
         public int OrderId

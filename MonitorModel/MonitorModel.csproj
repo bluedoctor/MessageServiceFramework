@@ -38,10 +38,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hisuntech.IBMP.AOP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\IBMP\Hisuntech.IBMP.AOP.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -129,6 +125,10 @@
     <Compile Include="UserSettingModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AOPIOC\AOP\AOP.csproj">
+      <Project>{068f6690-8eb5-484f-b795-3dab05538b1a}</Project>
+      <Name>AOP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MSFCommon\EnterpriceFrameworkCommon.csproj">
       <Project>{2a9a3a85-d2f6-44de-b7e8-5cdca17bce23}</Project>
       <Name>EnterpriceFrameworkCommon</Name>

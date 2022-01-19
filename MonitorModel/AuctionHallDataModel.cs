@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using PWMIS.EnterpriseFramework.Common;
 
-using IBMP.AOP;
 namespace TranstarAuction.Model
 {
     /// <summary>
@@ -416,7 +416,7 @@ namespace TranstarAuction.Model
     /// <summary>
     /// 具有更改通知功能的拍卖大厅数据模型
     /// </summary>
-    public class AuctionHallDataNotifyModel : NotifyBase, IAuctionHallDataModel
+    public class AuctionHallDataNotifyModel : NotifyChangedModel, IAuctionHallDataModel
     {
 
         int _CarSourceId;

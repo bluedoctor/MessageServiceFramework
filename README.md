@@ -30,6 +30,11 @@ MSFµ®ÉúÖÁ½ñÒÑÓÐ10ÄêÀúÊ·£¡
 ÈëÃÅÏêÏ¸ÄÚÈÝ£¬Çë¿´²©ÎÄ£º
 https://www.cnblogs.com/bluedoctor/p/7605737.html
 
+### ´ËÍâ£¬¿ò¼Ü»¹Ö§³ÖÏÂÁÐ¹¦ÄÜ£º
+* ÄÚÖÃ»º´æ·þÎñ
+* ÄÚÖÃ»á»°·þÎñ
+* ÄÚÖÃÈ¨ÏÞÈÏÖ¤·þÎñ
+* Ö§³Ö¼¯Èº¸ºÔØ¾ùºâ
 
 MSFÐÂ°æ±¾ËµÃ÷£º
 --------------
@@ -43,7 +48,14 @@ MSF³ÌÐò¼¯°æ±¾2.0.22.120ÒÔÉÏÎªÐÂ°æ±¾£¬¸ÃÐÂ°æ±¾µÄÖ÷Òª±ä»¯ÎªËùÖ§³ÖµÄ.NET°æ±¾·¢ÁË±ä»
 
 µ±Ç°°æ±¾ºÍÖ®Ç°°æ±¾µÄMSF»ùÓÚWCF¼¼Êõ¹¹½¨£¬±¾´ÎÉý¼¶Ö÷ÒªÊÇÎªÁËÀûÓÃ½Ï¸ß°æ±¾µÄ.NETÖÐµÄWCFÔöÇ¿µÄ¹¦ÄÜ¡£
 
-WCF¡¢.NET ºÍWindowsÏµÍ³°æ±¾Ö®¼äµÄ¹ØÏµ
+ÈçºÎÊ¹ÓÃ½â¾ö·½°¸
+-------------------------------
+µ±Ç°°æ±¾Ö§³ÖVS2017\2019\2022
+
+Èç¹ûÊÇVS2017¡¢VS2019£¬¿ÉÒÔÔÚVSÖÐ°²×° Nuget Package Project À©Õ¹£¬È»ºó¾Í¿ÉÒÔ´ò¿ªNuget½â¾ö·½°¸Ä¿Â¼ÏÂµÄÏîÄ¿¡£
+Èç¹ûÈ«²¿±àÒë³É¹¦£¬¿ÉÒÔÔËÐÐ Test\WinClient Æô¶¯·þÎñ£¬È»ºó¿ªÊ¼²âÊÔ¡£
+
+¸½£ºWCF¡¢.NET ºÍWindowsÏµÍ³°æ±¾Ö®¼äµÄ¹ØÏµ
 --------------------------------
 
 WCFÔÚ .NET 4.5ºÍ.NET 4.7ÓÐºÜ¶àÐÂÔö¹¦ÄÜºÍ¹¦ÄÜÉý¼¶£¬ÏêÏ¸ÄÚÈÝÇë²Î¿´£º
@@ -53,4 +65,12 @@ https://docs.microsoft.com/zh-cn/dotnet/framework/whats-new/?redirectedfrom=MSDN
 ÓÐ¹ØWindows²Ù×÷ÏµÍ³°æ±¾ºÍ.NET°æ±¾Ö®¼äµÄ¹ØÏµ£¬Çë²Î¿¼ÏÂÃæÄÚÈÝ£º
 .NET Framework °æ±¾ºÍÒÀÀµ¹ØÏµ
 https://docs.microsoft.com/zh-cn/dotnet/framework/migration-guide/versions-and-dependencies
+
+
+---------------
+±à¼­£ºÉîÀ¶Ò½Éú £¨QQ£º45383850£©
+
+Ê±¼ä£º2022.1.19
+
+
 
