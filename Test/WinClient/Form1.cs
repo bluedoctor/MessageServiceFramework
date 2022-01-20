@@ -262,6 +262,7 @@ namespace WinClient
             //    MessageBox.Show("请选择闹铃时间");
             //    return;
             //}
+            this.txtBlock.Text = "";
 
             ServiceRequest request = new ServiceRequest();
             request.ServiceName = "AlarmClockService";
@@ -280,7 +281,7 @@ namespace WinClient
                     MyInvoke(this, () =>
                     {
                         this.lblResult.Text = converter.Result.ToString();// +"/" + DateTime.Now.ToLongTimeString();
-                     
+                        this.txtBlock.Text += "闹钟响了，现在时间："+this.lblResult.Text+"\r\n";
                     });
                 }
                 else

@@ -69,6 +69,7 @@ namespace ServiceSample
                     {
                         timer.Stop();
                         Console.WriteLine("[{0}] AlarmClock Service Timer Stoped. ", DateTime.Now);
+                        CurrentContext.PublishEventSource.DeActive();
                         break;
                     }
                     System.Threading.Thread.Sleep(1000);

@@ -199,7 +199,7 @@
             <param name="objectMapper">两个对象之间进行属性值映射拷贝的方法，第一个参数为源对象，第二个参数为目标对象</param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:PWMIS.EnterpriseFramework.ModuleRoute.ModuleRuntime.ResolveProvider``1" -->
+        <!-- 对于成员“M:PWMIS.EnterpriseFramework.ModuleRoute.ModuleRuntime.ResolveProvider``1”忽略有格式错误的 XML 注释 -->
         <member name="P:PWMIS.EnterpriseFramework.ModuleRoute.ModuleRuntime.Current">
             <summary>
             获取当前的模块运行时对象

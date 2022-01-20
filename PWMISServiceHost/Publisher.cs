@@ -314,6 +314,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
         {
             EventServicePublisher self = (EventServicePublisher)this;
             self.Ready();
+            int threadId = Thread.CurrentThread.ManagedThreadId;
 
             while (true)
             {
@@ -328,7 +329,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     break;
                 }
 
-                string workMessage = "\r\n----publisher DoEvent------------------\r\n";
+                string workMessage = "\r\n----publisher(ThreadId="+threadId+") DoEvent------------------\r\n";
                 //等待服务对象触发事件，等待30秒
                 if (resetEvent.WaitOne(30 * 1000))
                 {
@@ -345,11 +346,11 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     int count = GetListeners().Length;
                     if (count == 0)
                     {
-                        Console.WriteLine("[{0}]当前任务已经没有监听器，但事件源对象仍然活动，可接受再次订阅--Task Name: {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), this.GetShortTaskName(255));
+                        Console.WriteLine("[{0}]当前任务(ThreadId=" + threadId + ")已经没有监听器，但事件源对象仍然活动，可接受再次订阅--Task Name: {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), this.GetShortTaskName(255));
                     }
                     else
                     {
-                        Console.WriteLine("[{0}]当前工作线程有{1}个相关的监听器，Task Name：{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), count, this.GetShortTaskName(255));
+                        Console.WriteLine("[{0}]当前任务(ThreadId=" + threadId + ")有{1}个相关的监听器，Task Name：{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), count, this.GetShortTaskName(255));
                     }
                 }
 
@@ -602,20 +603,21 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     try
                     {
                         ses.EventWork();
-                        Console.WriteLine("事件源对象的工作任务处理完成，即将停止事件处理。");
+                        Console.WriteLine("事件源对象的工作任务处理暂时完成，可能会停止事件处理。");
                     }
                     catch (Exception ex)
                     {
                         this.publishResult = ServiceConst.CreateServiceErrorMessage(ex.Message);
                         Console.WriteLine("事件源对象执行事件操作错误，即将停止事件处理！");
                         Program.Processer_ServiceErrorEvent(this, new ServiceErrorEventArgs(ex, "事件源对象执行事件操作错误"));
+                        ses.DeActive();
                     }
 
                     published = false;
                     //事件推送线程收到信号，开始工作
                     base.SetPublishEvent();
                     System.Threading.Thread.Sleep(1000);
-                    ses.DeActive();
+                   
                     lastPublishTime = DateTime.Now;
                 });
             }
