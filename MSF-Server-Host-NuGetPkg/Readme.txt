@@ -1,5 +1,11 @@
 ﻿PDF.NET Message Service Framework Service Host NuGet package.
+
+MSF Server Host Ver 1.2.6
+https://github.com/bluedoctor/MessageServiceFramework
+
+PDF.NET SOD.
 http://www.pwmis.com/sqlmap
+https://github.com/znlgis/sod
 
 =============nuget project==================================
 1,--PWMIS.EnterpriseFramework--

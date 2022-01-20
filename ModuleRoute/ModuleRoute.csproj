@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PWMIS.EnterpriseFramework.ModuleRoute</RootNamespace>
     <AssemblyName>PWMIS.EnterpriseFramework.ModuleRoute</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -74,9 +74,9 @@
     <None Include="PDF.NET.EF.2017.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PWMISServiceBasic\ServiceBasic.csproj">
-      <Project>{28bf9b80-4925-4d5e-ae6c-5748f753f197}</Project>
-      <Name>ServiceBasic</Name>
+    <ProjectReference Include="..\AOPIOC\IOC\IOC.csproj">
+      <Project>{ebd3ff59-db9c-4f46-9c81-bbce8210878d}</Project>
+      <Name>IOC</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

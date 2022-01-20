@@ -4,6 +4,25 @@
         <name>PWMIS.EnterpriseFramework.IOC</name>
     </assembly>
     <members>
+        <member name="T:PWMIS.EnterpriseFramework.IOC.DynamicMethodExecutor">
+            <summary>
+            动态方法执行器
+            </summary>
+        </member>
+        <member name="M:PWMIS.EnterpriseFramework.IOC.DynamicMethodExecutor.#ctor(System.Reflection.MethodInfo)">
+            <summary>
+            默认构造函数
+            </summary>
+            <param name="methodInfo">方法对象</param>
+        </member>
+        <member name="M:PWMIS.EnterpriseFramework.IOC.DynamicMethodExecutor.Execute(System.Object,System.Object[])">
+            <summary>
+            执行方法
+            </summary>
+            <param name="instance">包含方法的对象实例</param>
+            <param name="parameters">调用方法所需要的参数</param>
+            <returns></returns>
+        </member>
         <member name="P:PWMIS.EnterpriseFramework.IOC.IOCConfig.IOCConfigEntity">
             <summary>
             获取IOC配置信息类

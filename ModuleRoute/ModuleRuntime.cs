@@ -1,4 +1,5 @@
-﻿using PWMIS.EnterpriseFramework.Service.Basic;
+﻿//using PWMIS.EnterpriseFramework.Service.Basic;
+using PWMIS.EnterpriseFramework.IOC;
 using System;
 using System.Collections.Generic;
 using System.Linq;

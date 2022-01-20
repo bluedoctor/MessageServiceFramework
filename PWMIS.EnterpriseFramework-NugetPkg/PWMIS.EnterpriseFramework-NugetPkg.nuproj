@@ -42,6 +42,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AOPIOC\IOC\IOC.csproj" />
     <ProjectReference Include="..\ModuleRoute\ModuleRoute.csproj" />
+    <ProjectReference Include="..\MSFCommon\EnterpriceFrameworkCommon.csproj" />
   </ItemGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
 </Project>

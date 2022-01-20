@@ -11,17 +11,28 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PWMIS.EnterpriseFramework.Service.Basic
+namespace PWMIS.EnterpriseFramework.IOC
 {
+    /// <summary>
+    /// 动态方法执行器
+    /// </summary>
     public class DynamicMethodExecutor
     {
         private Func<object, object[], object> m_execute;
-
+        /// <summary>
+        /// 默认构造函数
+        /// </summary>
+        /// <param name="methodInfo">方法对象</param>
         public DynamicMethodExecutor(MethodInfo methodInfo)
         {
             this.m_execute = this.GetExecuteDelegate(methodInfo);
         }
-
+        /// <summary>
+        /// 执行方法
+        /// </summary>
+        /// <param name="instance">包含方法的对象实例</param>
+        /// <param name="parameters">调用方法所需要的参数</param>
+        /// <returns></returns>
         public object Execute(object instance, object[] parameters)
         {
             return this.m_execute(instance, parameters);

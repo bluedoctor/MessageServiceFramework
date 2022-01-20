@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicMethodExecutor.cs" />
     <Compile Include="IOCConfig.cs" />
     <Compile Include="Unity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
