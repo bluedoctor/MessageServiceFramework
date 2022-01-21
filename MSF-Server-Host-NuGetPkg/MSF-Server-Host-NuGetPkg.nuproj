@@ -39,13 +39,20 @@
   <ItemGroup>
     <Content Include="Content\IOCConfig.xml" />
     <Content Include="Content\PdfNetEF.MessageServiceHost.exe.config" />
-    <Content Include="lib\PWMIS.EnterpriseFramework.Message.PublisherLib.xml" />
+    <Content Include="lib\PdfNetEF.MessageServiceHost.exe" />
+    <Content Include="lib\PdfNetEF.MessageServiceHost.pdb" />
+    <Content Include="lib\PWMIS.EnterpriseFramework.Message.PublisherLib.xml">
+      <CopyToOutputDirectory>
+      </CopyToOutputDirectory>
+    </Content>
     <Content Include="Readme.txt" />
     <Content Include="Tools\install.ps1" />
+    <Content Include="Tools\SucessCompiled.vbs" />
     <Content Include="Tools\UpdateService.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PWMISServiceHost\ServiceHost.csproj" />
+    <ProjectReference Include="..\MessagePublisherLib\MessagePublisherLib.csproj" />
+    <ProjectReference Include="..\MSF-Server-Group-NuGetPkg\MSF-Server-Group-NuGetPkg.nuproj" />
   </ItemGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
 </Project>

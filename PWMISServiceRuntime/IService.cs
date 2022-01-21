@@ -89,6 +89,15 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         {
 
         }
+
+        /// <summary>
+        /// 发布分布式事件
+        /// </summary>
+        /// <param name="eventData">事件数据</param>
+        public void PublishDistributeEvent(object eventData)
+        {
+            this.CurrentContext.PublishData(eventData);
+        }
     }
 
     /// <summary>

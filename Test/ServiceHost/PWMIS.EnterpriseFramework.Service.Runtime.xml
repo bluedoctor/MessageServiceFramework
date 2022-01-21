@@ -190,6 +190,12 @@
             </summary>
             <param name="context"></param>
         </member>
+        <member name="M:PWMIS.EnterpriseFramework.Service.Runtime.ServiceBase.PublishDistributeEvent(System.Object)">
+            <summary>
+            发布分布式事件
+            </summary>
+            <param name="eventData">事件数据</param>
+        </member>
         <member name="T:PWMIS.EnterpriseFramework.Service.Runtime.IServiceContext">
             <summary>
             服务上下文接口

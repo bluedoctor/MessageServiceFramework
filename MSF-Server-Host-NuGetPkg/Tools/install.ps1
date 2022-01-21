@@ -3,13 +3,15 @@ $hostDir= Join-Path $([System.IO.Path]::GetDirectoryName($dte.Solution.FileName)
 if(!(Test-Path $hostDir) ){ 
   md  $hostDir
 }
+$exePath = Join-Path $installPath lib
+
 # 复制文件到解决方案的 Host目录
 $host_exe_target= Join-Path $hostDir PdfNetEF.MessageServiceHost.exe
 $host_pdb_target= Join-Path $hostDir PdfNetEF.MessageServiceHost.pdb
 $updateSrv_target =  Join-Path $hostDir UpdateService.bat
 
-$host_exe_src= Join-Path $toolsPath PdfNetEF.MessageServiceHost.exe
-$host_pdb_src= Join-Path $toolsPath PdfNetEF.MessageServiceHost.pdb
+$host_exe_src= Join-Path $exePath PdfNetEF.MessageServiceHost.exe
+$host_pdb_src= Join-Path $exePath PdfNetEF.MessageServiceHost.pdb
 $updateSrv_src =  Join-Path $toolsPath UpdateService.bat
 
 if( (Test-Path $host_exe_src)) { Copy-Item $host_exe_src $hostDir }

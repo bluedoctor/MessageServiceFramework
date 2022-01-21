@@ -442,7 +442,7 @@ namespace MessageSubscriber
                 {
                     if (this._closedFlag != 0) //关闭标志==0 表示在注册订阅阶段发生的事件，指示未注册成功
                         _serviceProxy.Unregist();
-                    if (_registed)
+                    if (_registed && _serviceProxy != null)
                         (_serviceProxy as IDisposable).Dispose();
                 }
             }

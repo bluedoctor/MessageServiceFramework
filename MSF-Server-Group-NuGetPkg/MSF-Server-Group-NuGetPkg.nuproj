@@ -35,11 +35,13 @@
     <Tags>WCF,Message</Tags>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="lib\PWMIS.EnterpriseFramework.Service.Group.dll" />
+    <Content Include="lib\PWMIS.EnterpriseFramework.Service.Group.pdb" />
     <Content Include="lib\PWMIS.EnterpriseFramework.Service.Group.xml" />
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PWMISServiceGroup\ServiceGroup.csproj" />
+    <ProjectReference Include="..\MSF-Server-NuGetPkg\MSF-Server-NuGetPkg.nuproj" />
   </ItemGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
 </Project>
