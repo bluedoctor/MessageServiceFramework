@@ -198,7 +198,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>xcopy *.* ..\..\..\Test\ServiceHost /y
-</PostBuildEvent>
+copy /y  "$(TargetDir)$(TargetName).*" "$(SolutionDir)MSF-Server-Host-NuGetPkg\lib\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\NuProj.Common.0.11.30\build\portable-net+win+wpa+wp+sl+netmf+MonoAndroid+MonoTouch+Xamarin.iOS\NuProj.Common.targets" Condition="Exists('..\packages\NuProj.Common.0.11.30\build\portable-net+win+wpa+wp+sl+netmf+MonoAndroid+MonoTouch+Xamarin.iOS\NuProj.Common.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

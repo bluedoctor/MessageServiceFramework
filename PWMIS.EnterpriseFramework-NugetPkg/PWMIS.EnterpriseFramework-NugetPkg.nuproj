@@ -35,14 +35,15 @@
     <Tags>WCF,Message</Tags>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="lib\PWMIS.EnterpriseFramework.IOC.xml" />
-    <Content Include="lib\PWMIS.EnterpriseFramework.ModuleRoute.xml" />
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AOPIOC\IOC\IOC.csproj" />
     <ProjectReference Include="..\ModuleRoute\ModuleRoute.csproj" />
     <ProjectReference Include="..\MSFCommon\EnterpriceFrameworkCommon.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
 </Project>

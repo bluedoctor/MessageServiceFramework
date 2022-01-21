@@ -35,7 +35,6 @@
     <Tags>WCF,Message</Tags>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="lib\PWMIS.EnterpriseFramework.Service.Runtime.xml" />
     <Content Include="Readme.txt" />
     <Content Include="Tools\install.ps1" />
     <Content Include="Tools\PreCompile.bat" />
@@ -43,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PWMISServiceRuntime\ServiceRuntime.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
 </Project>

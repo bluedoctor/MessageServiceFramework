@@ -212,8 +212,10 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             Console.WriteLine("service behavior config check  ok.");
 
             host.AddServiceEndpoint(typeof(IMessagePublishService), binding, uri);
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("=========PDF.NET.MSF (PWMIS Message Service) Ver {0} ==", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("启动消息发布服务……接入地址：{0}", uri);
+            Console.ResetColor();
             Console.WriteLine();
 
             ChangeConsoleOut();

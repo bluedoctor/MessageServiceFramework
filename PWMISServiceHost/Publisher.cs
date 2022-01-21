@@ -323,7 +323,9 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                 {
                     self.Close();
                     PublisherFactory.Instance.RemovePublisher(self.TaskName);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\r\n[{0}]当前任务已检验到事件源对象为非活动状态，工作线程退出--Task Name: {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), this.GetShortTaskName(255));
+                    Console.ResetColor();
                     batchIndex = 0;
                     StopPublish();
                     break;
@@ -343,6 +345,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     int count = GetListeners().Length;
                     if (count == 0)
                     {
@@ -352,6 +355,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     {
                         Console.WriteLine("[{0}]当前任务(ThreadId=" + threadId + ")有{1}个相关的监听器，Task Name：{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), count, this.GetShortTaskName(255));
                     }
+                    Console.ResetColor();
                 }
 
             }
@@ -608,9 +612,11 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     catch (Exception ex)
                     {
                         this.publishResult = ServiceConst.CreateServiceErrorMessage(ex.Message);
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("事件源对象执行事件操作错误，即将停止事件处理！");
                         Program.Processer_ServiceErrorEvent(this, new ServiceErrorEventArgs(ex, "事件源对象执行事件操作错误"));
                         ses.DeActive();
+                        Console.ResetColor();
                     }
 
                     published = false;

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MessagePublisherLib\MessagePublisherLib.csproj" />
+    <ProjectReference Include="..\ModuleRoute\ModuleRoute.csproj" />
     <ProjectReference Include="..\MSF-Server-Group-NuGetPkg\MSF-Server-Group-NuGetPkg.nuproj" />
   </ItemGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
