@@ -92,6 +92,11 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                 if (ProcessedRequestsUrl.TryTake(out req))
                 {
                     ServiceContext context = new ServiceContext(req);
+                    // 增加清理服务资源的接口功能 edit at 2022.2.9
+                    var service = ServiceFactory.GetService(context);
+                    if (service != null && service is IDisposable)
+                        ((IDisposable)service).Dispose();
+                    //
                     ServiceFactory.RemoveServiceObject(context);
                 }
             }
