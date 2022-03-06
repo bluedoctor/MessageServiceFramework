@@ -116,7 +116,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             {
                 System.IO.Directory.CreateDirectory(LogDirectory);
             }
-            Console.WriteLine("log ok.");
+            Console.WriteLine("log ok.Log Directory:{0}", LogDirectory);
             /////////////////////////////////////////////////////////////////////////
 #if(MONO)
             if (Environment.GetEnvironmentVariable("MONO_STRICT_MS_COMPLIANT") != "yes")
@@ -278,7 +278,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
 #else
             host.Open();
 
-            Console.WriteLine("服务正在运行");
+            Console.WriteLine("服务正在运行……");
             EnterMessageInputMode();
 
             Console.WriteLine("正在关闭服务……");
@@ -373,8 +373,10 @@ namespace PWMIS.EnterpriseFramework.Service.Host
 
         static void Instance_NotifyError(object sender, MessageNotifyErrorEventArgs e)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("[{0}]消息发送失败！--IP:{1}; Port:{2}; Error:{3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), e.Listener.FromIP, e.Listener.FromPort, e.Error.Message);
             Console.WriteLine("移除无效监听器……");
+            Console.ResetColor();
             MessageCenter.Instance.RemoveListener(e.Listener);
         }
 
@@ -439,7 +441,9 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), 
                 e.ErrorMessageText,
                 e.ErrorSource == null ? "NULL" : e.ErrorSource.ToString());
+            Console.ForegroundColor = ConsoleColor.Red;
             ConsoleWriteSubText(text, 1000);
+            Console.ResetColor();
             WriteLogFile("MSFErrorLog.txt", text);
         }
 
@@ -490,8 +494,10 @@ namespace PWMIS.EnterpriseFramework.Service.Host
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             string errMsg = "程序发生未处理的异常：\r\n" + e.ExceptionObject.ToString();
             Console.WriteLine(errMsg);
+            Console.ResetColor();
             WriteLogFile("MSFErrorLog.txt",errMsg);
         }
 

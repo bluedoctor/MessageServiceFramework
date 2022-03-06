@@ -489,6 +489,7 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
                             catch (Exception ex)
                             {
                                 this.Response.Write("");
+                                ProcessServiceError(ex,"执行Task.Result 调用错误");
                             }
                             
                         }
@@ -517,8 +518,11 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         private void ProcessServiceError(Exception ex,string errMessage="")
         {
             //Console.WriteLine("执行服务方法错误:{0}", ex.Message);
-            this.Response.Write(ServiceConst.CreateServiceErrorMessage(ex.Message));
-            this.Response.End();
+            if (!this.Response.IsEndResponse)
+            {
+                this.Response.Write(ServiceConst.CreateServiceErrorMessage(ex.Message));
+                this.Response.End();
+            }
             this.OnServiceError(ex, string.Format(
                 "执行服务方法错误：{0}\r\n源错误信息：{1}，\r\n请求的Uri:\r\n{2}，\r\n{3}:{4},{5}\r\n",
                 errMessage,

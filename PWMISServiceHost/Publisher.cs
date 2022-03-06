@@ -95,7 +95,18 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     // 增加清理服务资源的接口功能 edit at 2022.2.9
                     var service = ServiceFactory.GetService(context);
                     if (service != null && service is IDisposable)
-                        ((IDisposable)service).Dispose();
+                    {
+                        try
+                        {
+                            ((IDisposable)service).Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Clear Service ObjectCache when call Disponse Error:", ex.Message);
+                            Console.ResetColor();
+                        }
+                    }
                     //
                     ServiceFactory.RemoveServiceObject(context);
                 }

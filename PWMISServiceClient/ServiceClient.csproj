@@ -94,7 +94,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="PDF.NET.MSF.2017.pfx" />
-    <None Include="PdfNetMsfKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
