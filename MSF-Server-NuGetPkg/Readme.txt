@@ -1,5 +1,5 @@
 ﻿PDF.NET Message Service Framework Service  NuGet package.
-MSF Server Runtime Ver 1.2.1
+MSF Server Runtime Ver 1.2.2
 https://github.com/bluedoctor/MessageServiceFramework
 
 PDF.NET SOD.

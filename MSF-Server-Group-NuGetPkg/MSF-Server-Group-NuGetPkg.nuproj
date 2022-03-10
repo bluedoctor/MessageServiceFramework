@@ -19,7 +19,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>PDF.Net.MSF.Server.Group</Id>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <Title>PDF.NET MSF(Server Group RunTime)</Title>
     <Authors>bluedoctor</Authors>
     <Owners>pwmis.com</Owners>
@@ -27,12 +27,11 @@
     <Description>PDF.NET (PWMIS Develope Framework for .net) to Build Message Service for Server Group</Description>
     <ReleaseNotes>
     </ReleaseNotes>
-    <ProjectUrl>
-    </ProjectUrl>
+    <ProjectUrl>https://github.com/bluedoctor/MessageServiceFramework</ProjectUrl>
     <LicenseUrl>
     </LicenseUrl>
     <Copyright>Copyright © pwmis.com</Copyright>
-    <Tags>WCF,Message</Tags>
+    <Tags>WCF,Message,Actor</Tags>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="lib\PWMIS.EnterpriseFramework.Service.Group.dll" />

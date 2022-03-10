@@ -1,6 +1,6 @@
 ﻿PDF.NET Message Service Framework Service Host NuGet package.
 
-MSF Server Host Ver 1.2.6
+MSF Server Host Ver 1.2.9
 https://github.com/bluedoctor/MessageServiceFramework
 
 PDF.NET SOD.

@@ -19,7 +19,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>PDF.Net.MSF.Service.Host</Id>
-    <Version>1.2.6</Version>
+    <Version>1.2.9</Version>
     <Title>PDF.NET MSF(Server Host)</Title>
     <Authors>bluedoctor</Authors>
     <Owners>pwmis.com</Owners>
@@ -27,12 +27,11 @@
     <Description>PDF.NET (PWMIS Develope Framework for .net) Message Service Framework Server Host,Build Message Service Runtime    Host.</Description>
     <ReleaseNotes>
     </ReleaseNotes>
-    <ProjectUrl>
-    </ProjectUrl>
+    <ProjectUrl>https://github.com/bluedoctor/MessageServiceFramework</ProjectUrl>
     <LicenseUrl>
     </LicenseUrl>
     <Copyright>Copyright © pwmis.com</Copyright>
-    <Tags>WCF,Message</Tags>
+    <Tags>WCF,Message,Actor</Tags>
     <DevelopmentDependency>
     </DevelopmentDependency>
   </PropertyGroup>

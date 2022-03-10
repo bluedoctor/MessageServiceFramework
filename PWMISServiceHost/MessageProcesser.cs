@@ -288,7 +288,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                         publisher.SubscriberInfoList.Add(this.SubscriberInfo);
                         processMesssage = string.Format("\r\n[{0}]当前监听器已经加入消息发布线程， {1}:{2},Identity:{3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), this.SubscriberInfo.FromIP, this.SubscriberInfo.FromPort, this.SubscriberInfo.Identity);
                         //为新的事件订阅者推送上次的事件消息 2022.3.10
-                        string subMsg = ((EventServicePublisher)publisher).PublishSubsequentSubscribersMessage(this.SubscriberInfo);
+                        string subMsg = publisher.PublishSubsequentSubscribersMessage(this.SubscriberInfo);
                         string temp = subMsg.Length > 100 ? subMsg.Substring(0, 100) + " ..." : subMsg;
                         processMesssage += "\r\n 向后续订阅者推送的消息：" + temp;
 

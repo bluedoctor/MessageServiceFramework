@@ -1,5 +1,5 @@
 ﻿PDF.NET Message Service Framework Service Group NuGet package.
-MSF Server Group Ver 1.2.1
+MSF Server Group Ver 1.2.2
 https://github.com/bluedoctor/MessageServiceFramework
 
 PDF.NET SOD.
