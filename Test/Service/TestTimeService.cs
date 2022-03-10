@@ -8,29 +8,37 @@ using System.Threading.Tasks;
 
 namespace ServiceSample
 {
-    public class TestTimeService:IService
+    public class TestTimeService:ServiceBase
     {
         TimeCount tc;
-        IServiceContext currContext = null;
+        
         public TestTimeService()
         {
             tc = new TimeCount();
         }
 
+        /// <summary>
+        /// 供订阅使用的获取服务器时间的方法
+        /// </summary>
+        /// <returns></returns>
         public TimeCount ServerTime()
         {
-           
             tc.Execute();
             return tc;
         }
 
+        /// <summary>
+        /// 使用事件订阅的模式，进行并发的服务器时间推送测试，达到分布式事件推送的效果。
+        /// </summary>
+        /// <param name="timeCount"></param>
+        /// <returns></returns>
         public ServiceEventSource ParallelTime(int timeCount)
         {
             return new ServiceEventSource(this, 1, () => {
                 PublishParallelData(timeCount);
-                Console.WriteLine("All Publish OK.");
-                this.currContext.PublishData(new DateTime(2018,1,1));
-                this.currContext.PublishEventSource.DeActive();
+                Console.WriteLine("All Published OK.");
+                base.PublishDistributeEvent(new DateTime(2018,1,1));
+                //base.CurrentContext.PublishEventSource.DeActive();
             });
 
         }
@@ -44,7 +52,7 @@ namespace ServiceSample
                     int index = (int)obj;
                     DateTime dt = DateTime.Now;
                     Console.WriteLine(">>>>>>>>> NO.{0} begin publish data:{1},Thread ID:{2}",index, dt, System.Threading.Thread.CurrentThread.ManagedThreadId);
-                    this.currContext.PublishData(dt);
+                    base.CurrentContext.PublishData(dt);
                     Console.WriteLine("<<<<<<<<< NO.{0} end   publish data:{1},Thread ID:{2}", index, dt, System.Threading.Thread.CurrentThread.ManagedThreadId);
                     Console.WriteLine();
                 },i);
@@ -53,21 +61,15 @@ namespace ServiceSample
             //throw new Exception("test error...............");
         }
 
-        public void CompleteRequest(IServiceContext context)
+        /// <summary>
+        ///  在后续的订阅者加入时，服务进行的一些处理并返回给当前订阅者的数据，该数据类型需要与订阅时的数据类型一致。
+        /// </summary>
+        /// <returns></returns>
+        public override object OnSubsequentSubscribersAdding()
         {
-            
+            PublishParallelData(10);
+            return new DateTime(2018, 1, 1);
         }
 
-        public bool ProcessRequest(IServiceContext context)
-        {
-            this.currContext = context;
-            return true;
-        }
-
-
-        public bool IsUnSubscribe
-        {
-            get { return false; }
-        }
     }
 }

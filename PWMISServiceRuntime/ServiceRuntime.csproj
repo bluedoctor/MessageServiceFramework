@@ -64,6 +64,7 @@
     <Compile Include="Cache\CacheService.cs" />
     <Compile Include="Cache\ICacheProvider.cs" />
     <Compile Include="IService.cs" />
+    <Compile Include="IServiceContext.cs" />
     <Compile Include="Management\ManageService.cs" />
     <Compile Include="Principal\ServiceAuthentication.cs" />
     <Compile Include="Principal\ServiceIdentityContainer.cs" />

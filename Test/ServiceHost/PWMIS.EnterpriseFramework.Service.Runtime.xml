@@ -196,6 +196,12 @@
             </summary>
             <param name="eventData">事件数据</param>
         </member>
+        <member name="M:PWMIS.EnterpriseFramework.Service.Runtime.ServiceBase.OnSubsequentSubscribersAdding">
+            <summary>
+            在后续的订阅者加入时，服务进行的一些处理并返回给当前订阅者的数据，该数据类型需要与订阅时的数据类型一致。
+            </summary>
+            <returns>推送给当前订阅者的数据，如果为空则不会推送</returns>
+        </member>
         <member name="T:PWMIS.EnterpriseFramework.Service.Runtime.IServiceContext">
             <summary>
             服务上下文接口

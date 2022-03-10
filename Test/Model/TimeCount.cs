@@ -8,8 +8,13 @@ namespace Model
     public class TimeCount
     {
         private  int allCount=0;
-
+        /// <summary>
+        /// 服务端当前时间
+        /// </summary>
         public DateTime Now { get; set; }
+        /// <summary>
+        /// 推送计数
+        /// </summary>
         public int Count { get; set; }
 
 

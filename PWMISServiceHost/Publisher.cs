@@ -147,7 +147,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     thread = new Thread(new ThreadStart(DoWork));
                 thread.Name = this.TaskName;
                 thread.Start();
-                Console.WriteLine(">>已经开启发布线程！");
+                Console.WriteLine(">>已经开启发布线程！-- ThreadId:{0} --", thread.ManagedThreadId);
             }
             else
             {
@@ -175,6 +175,32 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             {
                 SubscriberInfoList.Add(sub);
             }
+        }
+
+        /// <summary>
+        /// 推送当前订阅者的第一条事件消息，用于后续新的订阅者加入的情况下。
+        /// </summary>
+        /// <param name="info">订阅者</param>
+        /// <returns></returns>
+        public string PublishSubsequentSubscribersMessage(SubscriberInfo info)
+        {
+            var service = ServiceFactory.GetService(Context) as ServiceBase;
+            if (service != null)
+            {
+                var initData = service.OnSubsequentSubscribersAdding();
+                if (initData != null)
+                {
+                    Context.WriteResponse(initData);
+                    string pushResult = Context.Response.AllText;
+                    if (!Context.NoResultRecord(pushResult))
+                    {
+                        MessageCenter.Instance.NotifyOneMessage(info._innerListener, info.MessageID, pushResult);
+                        return pushResult;
+                    }
+                }
+
+            }
+            return "[No Message Data On Subsequent Subscribers Adding]";
         }
 
         protected abstract void Publish(ref string workMessage);
@@ -589,6 +615,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
         DateTime lastPublishTime=DateTime.Now;//直接使用初始化的时间，而不再是默认时间，参考CheckActiveLife 方法内部说明
         bool published;
         AutoResetEvent workEvent = new AutoResetEvent(true);
+       
 
         public EventServicePublisher(string taskName, ServiceContext context) : base(taskName)
         {

@@ -346,8 +346,10 @@ namespace WinClient
                         this.txtBlock.Text += text;
                         if (converter.Result == new DateTime(2018, 1, 1))
                         {
+                            //结束标记 2018, 1, 1
                             btnParallel.Enabled = true;
                             MessageBox.Show("操作完成");
+                            serviceProxy.Close();
                         }
                        
                     });
