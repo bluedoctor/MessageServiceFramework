@@ -1,6 +1,12 @@
 ﻿/*
  * 实现消息发布服务
  * 注意：如果需要使用 MONO框架，请指定解决方案的条件编译常量 MONO
+ * 有关InstanceContextMode 和ConcurrencyMode的设置关系 ，请参考：
+ * https://docs.microsoft.com/zh-cn/previous-versions/cc681240(v=vs.100)?redirectedfrom=MSDN
+ * 
+ * 关于WCF性能问题，可以使用WCF性能计数器，请参考：
+ * https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/samples/using-performance-counters?view=netframework-4.7.2
+ * https://docs.microsoft.com/zh-cn/dotnet/framework/wcf/diagnostics/performance-counters/?redirectedfrom=MSDN
  */
 using System;
 using System.Collections.Generic;

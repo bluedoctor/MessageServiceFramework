@@ -15,6 +15,7 @@ using PWMIS.EnterpriseFramework.Service.Client.Model;
 using PWMIS.EnterpriseFramework.Service.Group;
 using System.Xml;
 using System.ServiceModel.Description;
+using System.Diagnostics;
 
 namespace PWMIS.EnterpriseFramework.Service.Host
 {
@@ -39,7 +40,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
 
         private static System.Threading.Timer CountTimer ;
         /// <summary>
-        /// 监听器统计，如果服务挂机，则统计信息在1分钟后过期
+        /// 监听器统计，每分钟统计一次，如果服务挂机，则统计信息在3分钟后过期
         /// </summary>
         private static void ListenersCountTimer()
         {
@@ -99,11 +100,13 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     cache.Insert<ServiceHostInfo>(
                            key,
                            serviceHostInfo,
-                           new System.Runtime.Caching.CacheItemPolicy() { SlidingExpiration = new TimeSpan(0, 1, 0) }
+                           new System.Runtime.Caching.CacheItemPolicy() { SlidingExpiration = new TimeSpan(0, 3, 0) }
                            );
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("=========监听器数量统计：当前{0}个,最大{1}个,用时{2} ms ============", currCount, maxCount, DateTime.Now.Subtract(dt).TotalMilliseconds);
-            }), null, 1000, 10000);
+                Console.ResetColor();
+            }), null, 30000, 60000);
         }
 
         static void Main(string[] args)
@@ -116,17 +119,17 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             {
                 System.IO.Directory.CreateDirectory(LogDirectory);
             }
-            Console.WriteLine("log ok.Log Directory:{0}", LogDirectory);
+            Console.WriteLine("Log ok.Log Directory:{0}", LogDirectory);
             /////////////////////////////////////////////////////////////////////////
 #if(MONO)
             if (Environment.GetEnvironmentVariable("MONO_STRICT_MS_COMPLIANT") != "yes")
             {
                 Environment.SetEnvironmentVariable("MONO_STRICT_MS_COMPLIANT", "yes");
-                Console.WriteLine("设置环境变量“MONO_STRICT_MS_COMPLIANT”为Yes！");
+                Console.WriteLine("Setting environment variables \"MONO_STRICT_MS_COMPLIANT\" = Yes!");
             }
             else
             {
-                Console.WriteLine("当前环境变量“MONO_STRICT_MS_COMPLIANT”值为Yes！");
+                Console.WriteLine("Current environment variables \"MONO_STRICT_MS_COMPLIANT\" = Yes!");
             }
 #endif
 
@@ -139,7 +142,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             {
                 ip = ipAddr.ToString();
             }
-            Console.WriteLine("ip config ok.");
+            Console.WriteLine("Ip config ok.");
 
             int port = int.Parse( System.Configuration.ConfigurationManager.AppSettings["ServerPort"]);// 8888;
             int tempPort;
@@ -151,8 +154,12 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             {
                 EnableConsoleOut = true;
             }
+            if (args.Length > 3 )
+            {
+                Console.Title = args[3];
+            }
 
-            Console.WriteLine("address config ok.");
+            Console.WriteLine("Address config ok.");
             ////
            
             string uri1 = string.Format("net.tcp://{0}:{1}", ip, port-1);
@@ -179,7 +186,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
 #if(MONO)
             XmlDictionaryReaderQuotas quo = new XmlDictionaryReaderQuotas();
             binding.ReaderQuotas = quo;
-            Console.WriteLine("binding init 4_1,ok.");
+            Console.WriteLine("Binding mono init ,ok.");
 #endif
             binding.ReaderQuotas.MaxArrayLength = 65536;
             //Console.WriteLine("binding init 4,ok.");
@@ -188,33 +195,34 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             binding.ReaderQuotas.MaxStringContentLength = 10 * 1024 * 1024; //65536;
            
             binding.ReceiveTimeout = TimeSpan.MaxValue;//设置连接自动断开的空闲时长；
-            binding.MaxConnections = 100;
+            binding.MaxConnections = 500;
             binding.ListenBacklog = 200;
             //Console.WriteLine("binding init 5,ok.");
             binding.TransferMode = TransferMode.Buffered;
             //Console.WriteLine("binding init 6,ok.");
             //请参见 http://msdn.microsoft.com/zh-cn/library/ee767642 进行设置
 
-            //Console.WriteLine("binding init ok.");
             ListAllBindingElements(binding);
-            Console.WriteLine("service binding config check all ok.");
+            Console.WriteLine("Service binding config check all ok.");
+            Console.WriteLine("  MaxConnections={0},ListenBacklog={1}", binding.MaxConnections, binding.ListenBacklog);
 
             ServiceHost host = new ServiceHost(typeof(MessagePublishServiceImpl));
+            //设置吞吐量
             ServiceThrottlingBehavior throttlingBehavior = host.Description.Behaviors.Find<ServiceThrottlingBehavior>();
             if (null == throttlingBehavior)
             {
                 throttlingBehavior = new ServiceThrottlingBehavior();
                 host.Description.Behaviors.Add(throttlingBehavior);
             }
-            throttlingBehavior.MaxConcurrentCalls = 50;
-            throttlingBehavior.MaxConcurrentInstances = 30;
-            throttlingBehavior.MaxConcurrentSessions = 50;
-            Console.WriteLine("service behavior config check  ok.");
+            //throttlingBehavior.MaxConcurrentCalls = 300;
+            //throttlingBehavior.MaxConcurrentInstances = 350; //InstanceContextMode.Single 无需设置
+            //throttlingBehavior.MaxConcurrentSessions = 500;
+            ListServiceBehavior(host);
 
             host.AddServiceEndpoint(typeof(IMessagePublishService), binding, uri);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("=========PDF.NET.MSF (PWMIS Message Service) Ver {0} ==", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Console.WriteLine("启动消息发布服务……接入地址：{0}", uri);
+            Console.WriteLine("=========PDF.NET.MSF (PWMIS Message Service) Ver {0} =====", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Console.WriteLine("启动消息发布服务……接入地址:{0} ,PID:{1}", uri, Process.GetCurrentProcess().Id);
             Console.ResetColor();
             Console.WriteLine();
 
@@ -245,9 +253,9 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             RegServiceContainer container = new RegServiceContainer();
             container.CurrentContext = new ServiceContext("");
             if (container.RegService(model))
-                Console.WriteLine("======注册集群节点成功，服务将以集群模式运行==================");
+                Console.WriteLine("======注册集群节点成功，服务将以集群模式运行=====================");
             else
-                Console.WriteLine("====== 未使用全局缓存，服务将以独立模式运行 ==================");
+                Console.WriteLine("====== 未使用全局缓存，服务将以独立模式运行 =====================");
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////
             MessageCenter.Instance.ListenerAdded += new EventHandler<MessageListenerEventArgs>(Instance_ListenerAdded);
@@ -279,6 +287,8 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             host.Open();
 
             Console.WriteLine("服务正在运行……");
+            ListenersCountTimer();//监听器数量统计
+            Console.WriteLine("监听器数量统计功能已开启！");
             EnterMessageInputMode();
 
             Console.WriteLine("正在关闭服务……");
@@ -286,6 +296,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             calculatorHost.Close();
 
             Console.WriteLine("服务已关闭。");
+            Console.WriteLine("请按任意键退出...");
 
 #endif
 
@@ -382,12 +393,16 @@ namespace PWMIS.EnterpriseFramework.Service.Host
 
         static void Instance_ListenerRemoved(object sender, MessageListenerEventArgs e)
         {
-            Console.WriteLine("[{0}]取消订阅-- From: {1}:{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), e.Listener.FromIP, e.Listener.FromPort);
+            string text= string.Format("[{0}]取消订阅-- From: {1}:{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), e.Listener.FromIP, e.Listener.FromPort);
+            Console.WriteLine(text);
+            WriteLogFile("MSFListenerLog" + DateTime.Now.ToString("yyyyMMdd") + ".txt", text);
         }
 
         static void Instance_ListenerAdded(object sender, MessageListenerEventArgs e)
         {
-            Console.WriteLine("[{0}]订阅消息-- From: {1}:{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), e.Listener.FromIP, e.Listener.FromPort);
+            string text = string.Format("[{0}]订阅消息-- From: {1}:{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), e.Listener.FromIP, e.Listener.FromPort);
+            Console.WriteLine(text);
+            WriteLogFile("MSFListenerLog"+ DateTime.Now.ToString("yyyyMMdd") + ".txt", text);
         }
 
         static void Instance_ListenerAcceptMessage(object sender, MessageListenerEventArgs e)
@@ -456,11 +471,33 @@ namespace PWMIS.EnterpriseFramework.Service.Host
 
         static void ListAllBindingElements(Binding binding)
         {
+            Console.WriteLine("Service All Binding Elements:----------------------------------");
             BindingElementCollection elements = binding.CreateBindingElements();
             for (int i = 0; i < elements.Count; i++)
             {
                 Console.WriteLine("{0}. {1}", i + 1, elements[i].GetType().FullName);
             }
+        }
+
+        //ServiceBehavior
+        static void ListServiceBehavior(ServiceHost host)
+        {
+            string msg = "Service Behaviors:---------------------------------------------" + Environment.NewLine;
+            int i = 1;
+            foreach (IServiceBehavior behavior in host.Description.Behaviors)
+            {
+                msg += i+", "+ behavior.ToString() + Environment.NewLine;
+
+                if (behavior is ServiceThrottlingBehavior)
+                {
+                    ServiceThrottlingBehavior serviceThrottlingBehavior = (ServiceThrottlingBehavior)behavior;
+                    msg += "     maxConcurrentSessions =   " + serviceThrottlingBehavior.MaxConcurrentSessions.ToString() + Environment.NewLine;
+                    msg += "     maxConcurrentCalls =   " + serviceThrottlingBehavior.MaxConcurrentCalls.ToString() + Environment.NewLine;
+                    msg += "     maxConcurrentInstances =   " + serviceThrottlingBehavior.MaxConcurrentInstances.ToString() + Environment.NewLine;
+                }
+                i++;
+            }
+            Console.WriteLine(msg);
         }
 
         static void ConsoleWriteSubText(string text, int length)
@@ -508,9 +545,9 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                 string text = string.Format("\r\n------------------------------\r\n{0}",  logMsg);
                 System.IO.File.AppendAllText(LogDirectory + fileName, text);
             }
-            catch
-            { 
-            
+            catch(Exception ex)
+            {
+                Console.WriteLine("保存日志文件错误：{0}，错误信息：{1}",fileName,ex.Message);
             }
         }
     }

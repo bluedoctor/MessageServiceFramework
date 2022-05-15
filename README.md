@@ -63,7 +63,7 @@ MSF程序集版本2.0.22.120以上为新版本，该新版本的主要变化为�
 
 WCF在 .NET 4.5和.NET 4.7有很多新增功能和功能升级，详细内容请参看：
 .NET Framework 中的新增功能
-https://docs.microsoft.com/zh-cn/dotnet/framework/whats-new/?redirectedfrom=MSDN#whats-new-in-net-framework-45
+https://docs.microsoft.com/zh-cn/dotnet/framework/whats-new/
 
 有关Windows操作系统版本和.NET版本之间的关系，请参考下面内容：
 .NET Framework 版本和依赖关系

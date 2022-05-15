@@ -94,5 +94,7 @@ namespace ServiceSample
         {
             get { return false; }
         }
+
+        public string ActorInstanceId { get; set; }
     }
 }

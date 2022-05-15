@@ -29,6 +29,10 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         /// (发布-订阅模式中)是否已经注销订阅服务
         /// </summary>
         bool IsUnSubscribe { get; }
+        /// <summary>
+        /// 服务以Actor模式运行的时候当前服务示例的标识
+        /// </summary>
+        string ActorInstanceId { get; set; }
 
     }
 
@@ -107,6 +111,10 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         {
             return null;
         }
+        /// <summary>
+        /// 服务以Actor模式运行的时候当前服务示例的标识
+        /// </summary>
+        public string ActorInstanceId { get; set; }
     }
 
    

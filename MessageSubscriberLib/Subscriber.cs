@@ -132,6 +132,8 @@ namespace MessageSubscriber
             NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
             binding.MaxBufferSize = int.MaxValue;
             binding.MaxReceivedMessageSize = int.MaxValue;
+            binding.MaxConnections = 100;
+            binding.ListenBacklog = 50;
             binding.ReaderQuotas.MaxArrayLength = 65536;
             binding.ReaderQuotas.MaxBytesPerRead = 10 * 1024 * 1024;
             binding.ReaderQuotas.MaxStringContentLength = 10 * 1024 * 1024; //10M;
@@ -443,12 +445,34 @@ namespace MessageSubscriber
                     if (this._closedFlag != 0) //关闭标志==0 表示在注册订阅阶段发生的事件，指示未注册成功
                         _serviceProxy.Unregist();
                     if (_registed && _serviceProxy != null)
-                        (_serviceProxy as IDisposable).Dispose();
+                    {
+                        //(_serviceProxy as IDisposable).Dispose();
+                        var client = _serviceProxy as IClientChannel;
+                        try
+                        {
+                            client.Close();
+                        }
+                        catch (TimeoutException exception)
+                        {
+                            OnErrorMessage(string.Format("innerDispose ClientChannel Close TimeoutException :{0}", exception.Message));
+                            client.Abort();
+                        }
+                        catch (CommunicationException exception)
+                        {
+                            OnErrorMessage(string.Format("innerDispose ClientChannel Close CommunicationException :{0}", exception.Message));
+                            client.Abort();
+                        }
+                        catch (Exception ex)
+                        {
+                            OnErrorMessage(string.Format("innerDispose ClientChannel Close Error: {0}", ex.Message));
+                            client.Abort();
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                OnErrorMessage(string.Format("innerDispose Error {0}", ex.Message));
+                OnErrorMessage(string.Format("innerDispose Unregist Error {0}", ex.Message));
             }
             finally
             {

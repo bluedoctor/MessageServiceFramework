@@ -4,11 +4,12 @@
  * ========================================================================
  *  依赖注入容器管理类
  * 
- * 作者：邓太华     时间：2010-06-18至21
+ * 作者：深蓝医生     时间：2010-06-18至21
  * 版本：V1.0
  * 
- * 修改者：         时间：                
- * 修改说明：
+ * 修改者：bluedoctor         时间：2022.5.13 
+ * 版本：V1.0.1 (file version:2.0.22.513)
+ * 修改说明 List<T> GetInstanceList<T>() 方法的正确实现
  * ========================================================================
 */
 using System;
@@ -279,7 +280,6 @@ namespace PWMIS.EnterpriseFramework.IOC
         /// 从所有容器名称中寻找指定的提供程序（容器的项名，XPath="/GroupSet/IOC/Add[@Key='iocItemKey']"），如果有多个，返回第一个。
         /// </summary>
         /// <typeparam name="T">指定类型（接口）</typeparam>
-        /// <param name="iocName">容器名称</param>
         /// <param name="iocItemKey">容器中的项名称</param>
         /// <returns>提供程序</returns>
         public T GetInstance<T>(string iocItemKey)
@@ -321,8 +321,10 @@ namespace PWMIS.EnterpriseFramework.IOC
             //    }
             //}
 
-            //采用迭代器结合委托简化代码，此代码可能有误
-            foreach (IocProvider provider in findProviderList(p => p.Key == p.Key))
+            //采用迭代器结合委托简化代码
+            //修改时间：2022-5-13
+            string interfaceName = typeof(T).FullName;
+            foreach (IocProvider provider in findProviderList(p => p.InterfaceName == interfaceName))
             {
                 list.Add((T)GetProviderInstance(provider));
             }

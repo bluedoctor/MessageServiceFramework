@@ -6,6 +6,7 @@ using MessagePublishService;
 using System.Threading;
 using PWMIS.EnterpriseFramework.Message.PublishService;
 using PWMIS.EnterpriseFramework.IOC;
+using System.ServiceModel;
 
 namespace MessagePublisher
 {
@@ -450,11 +451,36 @@ namespace MessagePublisher
             lock (_syncLock)
             {
                 IMessageListenerCallBack clientCallback = (IMessageListenerCallBack)sender;
+                IContextChannel context = sender as IContextChannel;
+                int threadId= System.Threading.Thread.CurrentThread.ManagedThreadId;
+                if (context != null)
+                {
+                    try
+                    {
+                        context.Close();
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("MSF Server ContextChannel Closed ! ThreadId={0}",threadId);
+                    }
+                    catch (CommunicationException exception)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("MSF Server Channel_Closing CommunicationException :{0}", exception.Message);
+                        context.Abort();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("MSF Server Channel_Closing  Error: {0}", ex.Message);
+                        context.Abort();
+                    }
+                    Console.ResetColor();
+                }
                 var messageListener = _listeners.Find(p => p.GetListener() == clientCallback);
                 if (messageListener != null)
                 {
+                    //在调用context.Close 后，客户正常关闭不会进入当前分支；客户端非正常关闭会进入当前分支。
                     RemoveListener(messageListener);
-                    Console.WriteLine("Channel_Closing");
+                    Console.WriteLine("Message Listener Removed,ThreadId={0}", threadId);
                 }
             }
         }

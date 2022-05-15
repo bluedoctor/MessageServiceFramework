@@ -23,6 +23,7 @@ namespace ServiceSample
         /// <returns></returns>
         public TimeCount ServerTime()
         {
+            
             tc.Execute();
             return tc;
         }
@@ -67,8 +68,17 @@ namespace ServiceSample
         /// <returns></returns>
         public override object OnSubsequentSubscribersAdding()
         {
-            PublishParallelData(10);
-            return new DateTime(2018, 1, 1);
+            if (base.CurrentContext.Request.MethodName == "ServerTime")
+            {
+                tc.Execute();
+                Console.WriteLine("SubsequentSubscribe:---{0}--{1}--", tc.Now, tc.Count);
+                return tc;
+            }
+            else
+            {
+                PublishParallelData(10);
+                return new DateTime(2018, 1, 1);
+            }
         }
 
     }

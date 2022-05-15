@@ -155,28 +155,37 @@ namespace WinClient
 
         }
 
-        private void btnVoid_Click(object sender, EventArgs e)
+        private async void btnVoid_Click(object sender, EventArgs e)
         {
             ServiceRequest request = new ServiceRequest();
             request.ServiceName = "Calculator";
             request.MethodName = "TestVoidMethod";
             request.Parameters = new object[] {"Message Service Framework" };
+            for (int i = 0; i < 5; i++)
+            {
             //异步方式测试
             Proxy serviceProxy = new Proxy();
             serviceProxy.KeepAlive = true;
             serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
-            serviceProxy.RequestService<int>(request, (x) =>
-            {
-                MessageBox.Show("[异步]执行无返回值方法完成");
-            });
-            serviceProxy.RequestService<int>(request, (x) =>
-            {
-                MessageBox.Show("[异步]执行无返回值方法完成");
-            });
+           
+                await serviceProxy.RequestServiceAsync<string>(request);
+                MessageBox.Show("[异步]执行无返回值方法完成" );
+            }
+
+            //serviceProxy.RequestService<int>(request, (x) =>
+            //{
+            //    MessageBox.Show("[异步]执行无返回值方法完成");
+            //});
 
         }
 
         private void btnServerTime_Click(object sender, EventArgs e)
+        {
+            //for (int i = 0; i < 10; i++)
+                SubscribeTime(0);
+        }
+
+        private void SubscribeTime(int index)
         {
             ServiceRequest request = new ServiceRequest();
             request.ServiceName = "TestTimeService";
@@ -184,17 +193,21 @@ namespace WinClient
 
             //异步方式测试
             Proxy serviceProxy = new Proxy();
+            serviceProxy.RegisterData = "reg1111";
+            serviceProxy.SetActorInstance("abce", 10);
+            serviceProxy.SetActorInstance("aaaa", 10);
             serviceProxy.ErrorMessage += new EventHandler<MessageSubscriber.MessageEventArgs>(serviceProxy_ErrorMessage);
             serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
-            int msgId= serviceProxy.Subscribe<TimeCount>(request, DataType.Json, (converter) =>
+            int msgId = serviceProxy.Subscribe<TimeCount>(request, DataType.Json, (converter) =>
             {
                 if (converter.Succeed)
                 {
                     MyInvoke(this, () =>
                     {
-                        this.lblResult.Text = converter.Result.Now.ToString();
-                        this.txtA.Text = converter.Result.Count.ToString();
-                        System.Diagnostics.Debug.WriteLine("time count:{0}",converter.Result.Count );
+                        //this.lblResult.Text = converter.Result.Count.ToString() + "--" + converter.Result.Now.ToString();
+                        string msg = index + "--" + converter.Result.Count.ToString() + "--" + converter.Result.Now.ToString();
+                        System.Diagnostics.Debug.WriteLine( msg);
+                        this.lblResult.Text = msg;
                         if (converter.Result.Count > 50)
                         {
                             serviceProxy.Close();
@@ -215,6 +228,7 @@ namespace WinClient
             {
                 this.btnServerTime.Enabled = false;
             }
+            this.lblResult.Text = "sub " + index;
         }
 
         void serviceProxy_ErrorMessage(object sender, MessageSubscriber.MessageEventArgs e)
@@ -310,6 +324,8 @@ namespace WinClient
         private void btnServerText_Click(object sender, EventArgs e)
         {
             Proxy serviceProxy = new Proxy();
+           
+
             serviceProxy.ErrorMessage += new EventHandler<MessageSubscriber.MessageEventArgs>(serviceProxy_ErrorMessage);
             serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
             serviceProxy.SubscribeTextMessage("你好，MSF", serverText => {
@@ -360,6 +376,19 @@ namespace WinClient
                 }
             });
             btnParallel.Enabled = false;
+        }
+
+        private void btnReqServerTime_Click(object sender, EventArgs e)
+        {
+            ServiceRequest request = new ServiceRequest();
+            request.ServiceName = "TestTimeService";
+            request.MethodName = "ServerTime";
+
+            Proxy serviceProxy = new Proxy();
+            serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
+            serviceProxy.SetActorInstance("aaaa");
+            TimeCount dt = serviceProxy.RequestServiceAsync<TimeCount>(request).Result;
+            MessageBox.Show("（Actor模式）请求服务器时间成功,Count=" + dt.Count.ToString());
         }
     }
 }

@@ -546,6 +546,20 @@
             <param name="host">远程主机名，可以是一个IP地址</param>
             <param name="port">连接远程主机的端口号</param>
         </member>
+        <member name="M:PWMIS.EnterpriseFramework.Service.Client.Proxy.Dispose">
+            <summary>
+            关闭服务连接，释放资源。
+            </summary>
+        </member>
+        <member name="M:PWMIS.EnterpriseFramework.Service.Client.Proxy.SetActorInstance(System.String,System.Int32)">
+            <summary>
+            设置当前调用的服务实例为Actor模式，实例有指定的生命周期。Actor模式的服务对象驻留内存，直到生命周期结束。
+            如果服务是发布订阅模式激活的，它的生命周期由发布者服务对象自己控制。
+            如果服务是请求相应模式激活的，它的生命周期取决于本方法的activeLife 参数指定的时间限制。
+            </summary>
+            <param name="actorId">Actor对象的唯一标识，默认使用GUID</param>
+            <param name="activeLife">实例对象的生命周期，单位分钟，默认20分钟</param>
+        </member>
         <member name="T:PWMIS.EnterpriseFramework.Service.Client.PublishServicePool">
             <summary>
             服务连接池

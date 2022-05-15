@@ -22,7 +22,7 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         /// </summary>
         /// <typeparam name="T">缓存对象的类型，如果是值类型必须使用对应的“可空类型”</typeparam>
         /// <param name="key">The key.</param>
-        /// <param name="date">The date.</param>
+        /// <param name="data">The date.</param>
         /// <param name="settings">The settings.</param>
         void Insert<T>(string key, T data, CacheItemPolicy settings);
         /// <summary>
@@ -41,10 +41,11 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         /// <returns></returns>
         T Get<T>(string cacheKey, Func<T> getData);
         /// <summary>
-        /// Removes the specified key.
+        /// 从缓存移除一个键对应的对象
         /// </summary>
-        /// <param name="key">The key.</param>
-        void Remove(string key);
+        /// <param name="key">缓存对象的键</param>
+        /// <returns>移除成功，返回被移除的缓存对象</returns>
+        object Remove(string key);
         /// <summary>
         /// Clears this instance.
         /// </summary>
@@ -61,17 +62,18 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         /// <returns>缓存对象</returns>
         /// <example>
         /// 例如获取缓存两小时的基金主表对象：
-        /// <code>
+        /// <code><![CDATA[
         /// ICacheProvider cache = CacheProviderFactory.GetCacheProvider();
-        /// List《JJZB》 allJJZB = cache.Get《List《JJZB》》("allJJZB", () =>
+        /// List<JJZB> allJJZB = cache.Get<List<JJZB>>("allJJZB", () =>
         /// {
         ///    JJZB jjzb = new JJZB();
         ///    OQL q = new OQL(jjzb);
         ///    q.Select();
-        ///    return EntityQuery《JJZB》.QueryList(q);
+        ///    return EntityQuery<JJZB>.QueryList(q);
         /// }
         /// , new CacheItemPolicy() { AbsoluteExpiration = DateTimeOffset.Now.AddHours(2) }
         /// );
+        /// ]]>
         /// </code>
         /// </example>
         T Get<T>(string cacheKey, Func<T> setInitData, CacheItemPolicy settings);

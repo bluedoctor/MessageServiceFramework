@@ -67,10 +67,12 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         {
             get { return false; }
         }
+
+        public string ActorInstanceId { get; set; }
     }
 
-    public class CacheServiceObject
-    { 
+    //public class CacheServiceObject
+    //{ 
     
-    }
+    //}
 }

@@ -61,9 +61,9 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
             return tdata;
         }
 
-        public void Remove(string key)
+        public object Remove(string key)
         {
-            MCache.Remove(key);
+            return MCache.Remove(key);
         }
 
         public void Clear()
@@ -219,7 +219,7 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
             return tdata;
         }
 
-        public void Remove(string key)
+        public object Remove(string key)
         {
             if (SRMList != null)
             {
@@ -260,6 +260,7 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
             // ServiceProxy.Close();
             //if (!converter.Scceed)
             //    throw new Exception("移除缓存失败：" + converter.ErrorMessage);
+            return null;
         }
 
         public void Clear()

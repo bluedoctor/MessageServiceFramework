@@ -255,6 +255,8 @@ namespace PWMIS.EnterpriseFramework.Service.Host
     /// </summary>
     class ServiceMessageProcess : MessageProcessBase
     {
+        private static object sync_obj = new object();
+
         protected override bool IsCurrentType()
         {
             return ServiceRequest.IsServiceUrl(this.Message);
@@ -287,7 +289,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     {
                         publisher.SubscriberInfoList.Add(this.SubscriberInfo);
                         processMesssage = string.Format("\r\n[{0}]当前监听器已经加入消息发布线程， {1}:{2},Identity:{3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), this.SubscriberInfo.FromIP, this.SubscriberInfo.FromPort, this.SubscriberInfo.Identity);
-                        //为新的事件订阅者推送上次的事件消息 2022.3.10
+                        //为新的订阅者推送上次的事件消息 2022.3.10
                         string subMsg = publisher.PublishSubsequentSubscribersMessage(this.SubscriberInfo);
                         string temp = subMsg.Length > 100 ? subMsg.Substring(0, 100) + " ..." : subMsg;
                         processMesssage += "\r\n 向后续订阅者推送的消息：" + temp;
@@ -414,16 +416,27 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             this.SubscriberInfo.Request = context.Request;
 
             ServicePublisher publisher = PublisherFactory.Instance.GetPublisher(context);
-            if (publisher.SubscriberInfoList.Count == 0)
+            lock (sync_obj)
             {
-                publisher.PublisherErrorEvent += new EventHandler<ServiceErrorEventArgs>(publisher_PublisherErrorEvent);
-            }
-            publisher.Host = context.Host;
-            publisher.ParallelExecute = context.ParallelExecute;
-            publisher.BatchInterval = context.BatchInterval;
+                if (!publisher.TaskIsRunning)
+                {
+                    if (publisher.SubscriberInfoList.Count == 0)
+                    {
+                        publisher.PublisherErrorEvent += new EventHandler<ServiceErrorEventArgs>(publisher_PublisherErrorEvent);
+                    }
+                    publisher.Host = context.Host;
+                    publisher.ParallelExecute = context.ParallelExecute;
+                    publisher.BatchInterval = context.BatchInterval;
 
-            publisher.SubscriberInfoList.Add(this.SubscriberInfo);//监听器可能存在端口复用的情况，因此需要及时释放SubscriberInfoList 的元素
-            publisher.StartWork(context.Request.RequestModel== RequestModel.ServiceEvent);
+                    publisher.SubscriberInfoList.Add(this.SubscriberInfo);//监听器可能存在端口复用的情况，因此需要及时释放SubscriberInfoList 的元素
+                    publisher.StartWork(context.Request.RequestModel == RequestModel.ServiceEvent);
+                }
+                else
+                {
+                    Console.WriteLine(">>发布线程运行中... ...check 1");
+                }
+            }
+            
         }
 
         void publisher_PublisherErrorEvent(object sender, ServiceErrorEventArgs e)

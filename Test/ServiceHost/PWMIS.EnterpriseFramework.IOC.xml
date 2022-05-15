@@ -134,7 +134,6 @@
             从所有容器名称中寻找指定的提供程序（容器的项名，XPath="/GroupSet/IOC/Add[@Key='iocItemKey']"），如果有多个，返回第一个。
             </summary>
             <typeparam name="T">指定类型（接口）</typeparam>
-            <param name="iocName">容器名称</param>
             <param name="iocItemKey">容器中的项名称</param>
             <returns>提供程序</returns>
         </member>

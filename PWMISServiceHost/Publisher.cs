@@ -151,7 +151,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             }
             else
             {
-                Console.WriteLine(">>发布线程运行中... ...");
+                Console.WriteLine(">>发布线程运行中... ...check 2");
             }
         }
 

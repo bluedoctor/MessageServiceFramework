@@ -1147,13 +1147,50 @@ namespace PWMIS.EnterpriseFramework.Service.Client
         }
         #endregion
 
+        /// <summary>
+        /// 关闭服务连接，释放资源。
+        /// </summary>
         public void Dispose()
         {
             this.Close();
         }
+
+        /// <summary>
+        /// 设置当前调用的服务实例为Actor模式，实例有指定的生命周期。Actor模式的服务对象驻留内存，直到生命周期结束。
+        /// 如果服务是发布订阅模式激活的，它的生命周期由发布者服务对象自己控制。
+        /// 如果服务是请求相应模式激活的，它的生命周期取决于本方法的activeLife 参数指定的时间限制。
+        /// </summary>
+        /// <param name="actorId">Actor对象的唯一标识，默认使用GUID</param>
+        /// <param name="activeLife">实例对象的生命周期，单位分钟，默认20分钟</param>
+        public void SetActorInstance(string actorId=null, int activeLife=20)
+        {
+            if (string.IsNullOrEmpty(actorId))
+                actorId = Guid.NewGuid().ToString();
+            actorId = actorId.Replace(':', '_').Replace(';', '.').Replace('=', '&').Replace('$', '&').Replace(' ', '_');
+            string instanceId = "$ActorInstanceId=" + actorId + ";ActiveLife=" + activeLife+"$";
+            if (string.IsNullOrEmpty(this.RegisterData))
+            { 
+                this.RegisterData = instanceId;
+            }
+            else
+            {
+                if (this.RegisterData.Contains("$ActorInstanceId="))
+                {
+                    int startIndex = this.RegisterData.IndexOf("$ActorInstanceId=");
+                    int endIndex = this.RegisterData.IndexOf('$', startIndex + 1);
+                    if (endIndex == -1) endIndex = this.RegisterData.Length - 1;
+                    string repStr = this.RegisterData.Substring(startIndex, endIndex - startIndex + 1);
+                    this.RegisterData = this.RegisterData.Replace(repStr, instanceId);
+                }
+                else
+                {
+                    this.RegisterData += instanceId;
+                }
+            }
+        }
     }
 
-    public class RequestServiceArgs<T>
+    class RequestServiceArgs<T>
     {
         public string ReqSrvUrl { get; set; }
         public DataType ResultDataType { get; set; }
