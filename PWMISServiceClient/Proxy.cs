@@ -1,5 +1,5 @@
 ﻿/*
- * New  12.28
+ * 2022-6-5 增加同步获取服务结果的方法 GetService,TryGetService
  */
 using System;
 using System.Collections.Generic;
@@ -123,6 +123,40 @@ namespace PWMIS.EnterpriseFramework.Service.Client
         #endregion
 
         #region 同步 请求-响应
+        /// <summary>
+        /// 以同步的方式（阻塞），获取服务执行的结果。如果获取失败，本方法将抛出异常，可以尝试使用TryGetService方法。
+        /// 如果需要获取服务响应消息的更多信息，请使用GetServiceMessage 方法。
+        /// </summary>
+        /// <typeparam name="T">结果类型</typeparam>
+        /// <param name="request"></param>
+        /// <returns>服务返回的结果。如果未成功，将抛出异常</returns>
+        public T GetService<T>(ServiceRequest request)
+        {
+            DataType resultDataType = MessageConverter<T>.GetResponseDataType();
+            var converter = GetServiceMessage<T>(request, resultDataType);
+            if (converter.Succeed)
+                return converter.Result;
+            else
+                throw new Exception("消息转换失败，错误原因："+converter.ErrorMessage);
+        }
+
+        /// <summary>
+        /// 尝试获取服务同步请求响应的结果。
+        /// </summary>
+        /// <typeparam name="T">结果类型</typeparam>
+        /// <param name="request"></param>
+        /// <param name="result">返回的结果</param>
+        /// <returns>获取服务结果是否成功</returns>
+        public bool TryGetService<T>(ServiceRequest request,out T result)
+        {
+            DataType resultDataType = MessageConverter<T>.GetResponseDataType();
+            var converter = GetServiceMessage<T>(request, resultDataType);
+            if (converter.Succeed)
+                result = converter.Result;
+            else
+                result = default(T);
+            return converter.Succeed;
+        }
 
         /// <summary>
         /// 以同步的方式（阻塞），获取服务执行的结果消息
@@ -371,6 +405,12 @@ namespace PWMIS.EnterpriseFramework.Service.Client
         public Task<T> RequestServiceAsync<T, TFunPara, TFunResult>(string reqSrvUrl, DataType resultDataType, MyFunc<TFunPara, TFunResult> function)
         {
             var tcs = new TaskCompletionSource<T>();
+            const int timeoutMs = 60000;
+            var ct = new CancellationTokenSource(timeoutMs);
+            ct.Token.Register(() => tcs.TrySetException(
+                new TimeoutException("异步方式请求服务超过了1分钟仍然没有收到任何结果，请求已经超时取消。如果需要等待更长时间，请使用RequestService而不是使用RequestServiceAsync方式请求服务！")), 
+                useSynchronizationContext: false);
+
             Connection conn = new Connection(this.ServiceBaseUri, this.UseConnectionPool);
             conn.UserName = this.ConnectionUserName;
             conn.Password = this.ConnectionPassword;

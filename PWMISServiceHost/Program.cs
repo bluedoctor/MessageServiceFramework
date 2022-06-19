@@ -353,22 +353,57 @@ namespace PWMIS.EnterpriseFramework.Service.Host
         }
 
         /// <summary>
-        /// 消息发送模式；
+        /// 消息发送模式；（后续可以实现命令行服务诊断功能）
         /// </summary>
         static void EnterMessageInputMode()
         {
-            Console.WriteLine("请输入要发送的消息，按回车键发送。输入 @exit 回车结束操作并关闭服务。");
+            Console.WriteLine("请输入要发送的消息，按回车键发送。输入 @exit 回车结束操作并关闭服务，输入@help获取控制台命令帮助。");
 			string line;
             do
             {
                 Console.Write(">>");
-                line = Console.ReadLine();
-			
-                if ("@exit" == line.Trim())
+                line = Console.ReadLine().Trim();
+
+                if (line == "@help")
+                {
+                    Console.WriteLine(" MSF Host Console Command:");
+                    Console.WriteLine(" @pid:当前进程ID");
+                    Console.WriteLine(" @srv_url:服务接入地址");
+                    Console.WriteLine(" @>>:控制台输出到文件");
+                    Console.WriteLine(" @exit:关闭服务");
+                    continue;
+                }
+                else if ("@pid" == line)
+                {
+                    Console.WriteLine("当前进程ID：{0}", Process.GetCurrentProcess().Id);
+                    continue;
+                }
+                else if ("@srv_url" == line)
+                {
+                    Console.WriteLine("服务接入地址：{0}", Host.RegServerDesc);
+                    continue;
+                }
+                else if ("@>>" == line)
+                {
+                    Console.WriteLine("执行本命令，所有控制台输出都将立即输出到MSF系统日志文件，如果需要重新在控制台查看消息，只有重启本服务。");
+                    Console.Write("确认输出转向吗？(Y/N)");
+                    line = Console.ReadLine().Trim();
+                    if (line == "Y")
+                    {
+                        EnableConsoleOut = true;
+                        ChangeConsoleOut();
+                    }
+                    else
+                    {
+                        Console.WriteLine("已经取消执行控制台输出转向。");
+                    }
+                    continue;
+                }
+                else if ("@exit" == line)
                 {
                     break;
                 }
-                if (string.Empty == line.Trim())
+                if (string.Empty == line)
                 {
                     Console.WriteLine("[{0}]不能发送空消息！", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     continue;

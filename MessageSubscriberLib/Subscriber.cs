@@ -132,8 +132,8 @@ namespace MessageSubscriber
             NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
             binding.MaxBufferSize = int.MaxValue;
             binding.MaxReceivedMessageSize = int.MaxValue;
-            binding.MaxConnections = 100;
-            binding.ListenBacklog = 50;
+            binding.MaxConnections = 500;
+            binding.ListenBacklog = 200;
             binding.ReaderQuotas.MaxArrayLength = 65536;
             binding.ReaderQuotas.MaxBytesPerRead = 10 * 1024 * 1024;
             binding.ReaderQuotas.MaxStringContentLength = 10 * 1024 * 1024; //10M;

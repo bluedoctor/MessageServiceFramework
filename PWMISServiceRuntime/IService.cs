@@ -81,7 +81,18 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
         /// <param name="context">当前服务上下文</param>
         public virtual bool ProcessRequest(IServiceContext context)
         {
-            this.CurrentContext = context;
+            if (this.CurrentContext == null)
+            {
+                this.CurrentContext = context;
+            }
+            else if (this.CurrentContext.Request.RequestModel != RequestModel.GetService)
+            { 
+                //解决Actor模式下事件推送事件丢失的问题
+            }
+            else
+            {
+                this.CurrentContext = context;
+            }
             return true;
         }
 

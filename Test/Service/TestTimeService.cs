@@ -23,7 +23,14 @@ namespace ServiceSample
         /// <returns></returns>
         public TimeCount ServerTime()
         {
-            
+            if (base.CurrentContext.User != null)
+            {
+                Console.WriteLine("username:{0}", base.CurrentContext.User.Name);
+            }
+            else
+            {
+                Console.WriteLine("No User.");
+            }
             tc.Execute();
             return tc;
         }
@@ -38,7 +45,8 @@ namespace ServiceSample
             return new ServiceEventSource(this, 1, () => {
                 PublishParallelData(timeCount);
                 Console.WriteLine("All Published OK.");
-                base.PublishDistributeEvent(new DateTime(2018,1,1));
+                //推送一个结束时间标志，客户端收到后关闭连接。
+                //base.PublishDistributeEvent(new DateTime(2018,1,1));
                 //base.CurrentContext.PublishEventSource.DeActive();
             });
 
@@ -51,11 +59,17 @@ namespace ServiceSample
             {
                 tasks[i] =Task.Factory.StartNew(obj => {
                     int index = (int)obj;
-                    DateTime dt = DateTime.Now;
-                    Console.WriteLine(">>>>>>>>> NO.{0} begin publish data:{1},Thread ID:{2}",index, dt, System.Threading.Thread.CurrentThread.ManagedThreadId);
-                    base.CurrentContext.PublishData(dt);
-                    Console.WriteLine("<<<<<<<<< NO.{0} end   publish data:{1},Thread ID:{2}", index, dt, System.Threading.Thread.CurrentThread.ManagedThreadId);
-                    Console.WriteLine();
+                    for (int m = 0; m < 50; m++)
+                    {
+                        DateTime dt = DateTime.Now;
+                        Console.WriteLine(">>>>>>>>> NO.{0} begin publish data:{1},Thread ID:{2}", index, dt, System.Threading.Thread.CurrentThread.ManagedThreadId);
+                        base.CurrentContext.PublishData(dt);
+                        Console.WriteLine("<<<<<<<<< NO.{0} end   publish data:{1},Thread ID:{2}", index, dt, System.Threading.Thread.CurrentThread.ManagedThreadId);
+                        Console.WriteLine();
+
+                        Task.Delay(1000).Wait();
+                    }
+                  
                 },i);
             }
             Task.WaitAll(tasks, -1);
@@ -76,8 +90,10 @@ namespace ServiceSample
             }
             else
             {
-                PublishParallelData(10);
-                return new DateTime(2018, 1, 1);
+                //PublishParallelData(10);
+                //return new DateTime(2018, 1, 1);
+                Console.WriteLine("SubsequentSubscribe Request.MethodName {0}", base.CurrentContext.Request.MethodName);
+                return DateTime.Now;
             }
         }
 

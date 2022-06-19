@@ -262,6 +262,24 @@
             服务关闭事件
             </summary>
         </member>
+        <member name="M:PWMIS.EnterpriseFramework.Service.Client.Proxy.GetService``1(PWMIS.EnterpriseFramework.Service.Basic.ServiceRequest)">
+            <summary>
+            以同步的方式（阻塞），获取服务执行的结果。如果获取失败，本方法将抛出异常，可以尝试使用TryGetService方法。
+            如果需要获取服务响应消息的更多信息，请使用GetServiceMessage 方法。
+            </summary>
+            <typeparam name="T">结果类型</typeparam>
+            <param name="request"></param>
+            <returns>服务返回的结果。如果未成功，将抛出异常</returns>
+        </member>
+        <member name="M:PWMIS.EnterpriseFramework.Service.Client.Proxy.TryGetService``1(PWMIS.EnterpriseFramework.Service.Basic.ServiceRequest,``0@)">
+            <summary>
+            尝试获取服务同步请求响应的结果。
+            </summary>
+            <typeparam name="T">结果类型</typeparam>
+            <param name="request"></param>
+            <param name="result">返回的结果</param>
+            <returns>获取服务结果是否成功</returns>
+        </member>
         <member name="M:PWMIS.EnterpriseFramework.Service.Client.Proxy.GetServiceMessage``1(System.String,PWMIS.EnterpriseFramework.Common.DataType)">
             <summary>
             以同步的方式（阻塞），获取服务执行的结果消息

@@ -23,6 +23,7 @@ namespace WinClient
     public partial class Form1 : Form
     {
         private int debugCount = 0;
+        Proxy CurrentProxy;
         public Form1()
         {
             InitializeComponent();
@@ -194,7 +195,7 @@ namespace WinClient
             //异步方式测试
             Proxy serviceProxy = new Proxy();
             serviceProxy.RegisterData = "reg1111";
-            serviceProxy.SetActorInstance("abce", 10);
+          
             serviceProxy.SetActorInstance("aaaa", 10);
             serviceProxy.ErrorMessage += new EventHandler<MessageSubscriber.MessageEventArgs>(serviceProxy_ErrorMessage);
             serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
@@ -229,6 +230,7 @@ namespace WinClient
                 this.btnServerTime.Enabled = false;
             }
             this.lblResult.Text = "sub " + index;
+            this.CurrentProxy = serviceProxy;
         }
 
         void serviceProxy_ErrorMessage(object sender, MessageSubscriber.MessageEventArgs e)
@@ -343,13 +345,15 @@ namespace WinClient
             ServiceRequest request = new ServiceRequest();
             request.ServiceName = "TestTimeService";
             request.MethodName = "ParallelTime";
-            request.Parameters = new object[] { 50 };
+            request.Parameters = new object[] { 2 };
 
             //异步方式测试
             Proxy serviceProxy = new Proxy();
             serviceProxy.ErrorMessage += new EventHandler<MessageSubscriber.MessageEventArgs>(serviceProxy_ErrorMessage);
             serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
             this.txtBlock.Text = "";
+            serviceProxy.SetActorInstance("TestTimeService_ParallelTime");
+
             int msgId = serviceProxy.Subscribe<DateTime>(request, DataType.DateTime, (converter) =>
             {
                 if (converter.Succeed)
@@ -359,7 +363,7 @@ namespace WinClient
                         System.Threading.Thread.CurrentThread.ManagedThreadId);
                     MyInvoke(this, () =>
                     {
-                        this.txtBlock.Text += text;
+                        this.txtBlock.Text = text;
                         if (converter.Result == new DateTime(2018, 1, 1))
                         {
                             //结束标记 2018, 1, 1
@@ -384,11 +388,24 @@ namespace WinClient
             request.ServiceName = "TestTimeService";
             request.MethodName = "ServerTime";
 
-            Proxy serviceProxy = new Proxy();
+            //Proxy serviceProxy = new Proxy();
+            Proxy serviceProxy = CurrentProxy?? new Proxy();
             serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
-            serviceProxy.SetActorInstance("aaaa");
+            serviceProxy.SetActorInstance("TestTimeService_ParallelTime");
+            //serviceProxy.ConnectionUserName = "user1";
             TimeCount dt = serviceProxy.RequestServiceAsync<TimeCount>(request).Result;
             MessageBox.Show("（Actor模式）请求服务器时间成功,Count=" + dt.Count.ToString());
+
+            //var result= serviceProxy.GetServiceMessage<TimeCount>(request, DataType.Json);
+            //if (result.Succeed && result.Result!=null)
+            //{
+            //    MessageBox.Show("（Actor模式）请求服务器时间成功,Count=" + result.Result.Count.ToString());
+            //}
+            //else
+            //{
+            //    MessageBox.Show(result.ErrorMessage);
+            //}
+
         }
     }
 }

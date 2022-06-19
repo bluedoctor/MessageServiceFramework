@@ -47,7 +47,7 @@ namespace PWMIS.EnterpriseFramework.Service.Runtime
                     if (request.RequestModel == RequestModel.GetService)
                     {
                         string strActiveLife = arr1[1].Split('=')[1];
-                        //请求相应模式，服务对象生命周期由Proxy对象指定
+                        //请求响应模式，服务对象生命周期由Proxy对象指定
                         if (!int.TryParse(strActiveLife, out int activeLife))
                             activeLife = 20;
                         service= context.Cache.Get<IService>(actorId, () => 

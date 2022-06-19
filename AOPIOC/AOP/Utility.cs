@@ -71,7 +71,7 @@ namespace PWMIS.EnterpriseFramework.AOP
         /// <summary>
         /// 创建类型未包装前的原始实例
         /// </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName">接口类型名称</param>
         /// <returns></returns>
         private object CreateInstance(string typeName)
         {

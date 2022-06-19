@@ -230,15 +230,6 @@ namespace PWMIS.EnterpriseFramework.IOC
         /// <returns>提供程序</returns>
         public T GetInstance<T>()
         {
-            //foreach (IOCConfigEntity.IOC ioc in IOCConfig.IOCConfigEntity.GroupSet)
-            //{
-            //    foreach (IocProvider provider in ioc.IocProviderList )
-            //    {
-            //        return (T)GetProviderInstance(provider);
-            //    }
-            //}
-            // ProviderCompare cmp = delegate() {return  true; };
-
             //采用委托简化代码
             string iName = this.GetInterfaceName(typeof(T).FullName);
             IocProvider provider = findProvider(p => p.InterfaceName == iName);
@@ -306,24 +297,21 @@ namespace PWMIS.EnterpriseFramework.IOC
 
 
         /// <summary>
-        /// 从所有容器中寻找符合当前指定类型（接口）的 提供程序列表
+        /// 从所有容器中寻找继承当前指定类型（或接口）的 提供程序列表。
+        /// 如果是接口，则需要在SystemInterface 配置节配置；如果没有配置，则需要在GroupSet下面的配置项中使用InterfaceName 使用接口类型的全名称。
         /// </summary>
-        /// <typeparam name="T">指定类型（接口）</typeparam>
+        /// <typeparam name="T">指定类型（或接口）</typeparam>
         /// <returns>提供程序列表</returns>
         public List<T> GetInstanceList<T>()
         {
             List<T> list = new List<T>();
-            //foreach (IOCConfigEntity.IOC ioc in IOCConfig.IOCConfigEntity.GroupSet)
-            //{
-            //    foreach (IocProvider provider in ioc.IocProviderList)
-            //    {
-            //        list.Add ( (T)GetProviderInstance(provider));
-            //    }
-            //}
+            string interfaceName = typeof(T).FullName;
+            var interfaceCfg = IOCConfig.IOCConfigEntity.SystemInterface.FirstOrDefault(p => p.InterfaceFullName == interfaceName);
+            if (interfaceCfg != null)
+                interfaceName = interfaceCfg.Name;
 
             //采用迭代器结合委托简化代码
             //修改时间：2022-5-13
-            string interfaceName = typeof(T).FullName;
             foreach (IocProvider provider in findProviderList(p => p.InterfaceName == interfaceName))
             {
                 list.Add((T)GetProviderInstance(provider));
@@ -339,18 +327,9 @@ namespace PWMIS.EnterpriseFramework.IOC
         public List<object> GetInstanceList(string interfaceName)
         {
             List<object> list = new List<object>();
-            //foreach (IOCConfigEntity.IOC ioc in IOCConfig.IOCConfigEntity.GroupSet)
-            //{
-            //    foreach (IocProvider provider in ioc.IocProviderList)
-            //    {
-            //        if (provider.InterfaceName == interfaceName)
-            //        {
-            //            object obj= GetProviderInstance(provider);
-            //            list.Add(obj);
-            //        }
-
-            //    }
-            //}
+            var interfaceCfg = IOCConfig.IOCConfigEntity.SystemInterface.FirstOrDefault(p => p.InterfaceFullName == interfaceName);
+            if (interfaceCfg != null)
+                interfaceName = interfaceCfg.Name;
 
             //采用迭代器结合委托简化代码
             foreach (IocProvider provider in findProviderList(p => p.InterfaceName == interfaceName))

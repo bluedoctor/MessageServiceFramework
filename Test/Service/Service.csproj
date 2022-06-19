@@ -57,6 +57,10 @@
       <Project>{28bf9b80-4925-4d5e-ae6c-5748f753f197}</Project>
       <Name>ServiceBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PWMISServiceClient\ServiceClient.csproj">
+      <Project>{A0D23B66-81B1-49CD-9A79-64509F6BB837}</Project>
+      <Name>ServiceClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PWMISServiceRuntime\ServiceRuntime.csproj">
       <Project>{6e9892e2-2b86-4406-ad2b-e047a66011fd}</Project>
       <Name>ServiceRuntime</Name>

@@ -66,51 +66,59 @@ namespace PWMIS.EnterpriseFramework.Service.Host
         /// <summary>
         /// 以一个任务名称初始化本类
         /// </summary>
-        /// <param name="taskName"></param>
+        /// <param name="taskName">服务请求的地址</param>
         public ServicePublisher(string taskName)
         {
             this.TaskName = taskName;
             this.BatchInterval = 1000;
         }
 
-        /// <summary>
-        /// 添加要处理的请求消息
-        /// </summary>
-        /// <param name="request"></param>
-        public void AddProcessedRequest(ServiceRequest request)
-        {
-            string url = request.ServiceUrl;
-            if (!ProcessedRequestsUrl.Contains(url))
-                ProcessedRequestsUrl.Add(url);
-        }
+        ///// <summary>
+        ///// 添加要处理的请求消息
+        ///// </summary>
+        ///// <param name="request"></param>
+        //public void AddProcessedRequest(ServiceRequest request)
+        //{
+        //    string url = request.ServiceUrl;
+        //    if (!ProcessedRequestsUrl.Contains(url))
+        //        ProcessedRequestsUrl.Add(url);
+        //}
 
         private void ClearServiceObjectCache()
         {
-            string req = null;
-            while (!ProcessedRequestsUrl.IsEmpty)
+            //string req = null;
+            //while (!ProcessedRequestsUrl.IsEmpty)
+            //{
+            //    if (ProcessedRequestsUrl.TryTake(out req))
+            //    {
+            //        ServiceContext context = new ServiceContext(req);
+
+            //    }
+            //}
+            if (this.Context == null)
+                return;
+
+            // 增加清理服务资源的接口功能 edit at 2022.2.9
+            if (this.Context.Request.RequestModel == RequestModel.Publish)
             {
-                if (ProcessedRequestsUrl.TryTake(out req))
+                //事件源对象的清理会在执行 Context.Disponse方法时候执行
+                var service = ServiceFactory.GetService(this.Context);
+                if (service != null && service is IDisposable)
                 {
-                    ServiceContext context = new ServiceContext(req);
-                    // 增加清理服务资源的接口功能 edit at 2022.2.9
-                    var service = ServiceFactory.GetService(context);
-                    if (service != null && service is IDisposable)
+                    try
                     {
-                        try
-                        {
-                            ((IDisposable)service).Dispose();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Clear Service ObjectCache when call Disponse Error:", ex.Message);
-                            Console.ResetColor();
-                        }
+                        ((IDisposable)service).Dispose();
                     }
-                    //
-                    ServiceFactory.RemoveServiceObject(context);
+                    catch (Exception ex)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Clear Service ObjectCache when call Disponse Error:", ex.Message);
+                        Console.ResetColor();
+                    }
                 }
             }
+            //
+            ServiceFactory.RemoveServiceObject(this.Context);
         }
 
         protected string GetShortTaskName(int length)
@@ -146,6 +154,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                 else
                     thread = new Thread(new ThreadStart(DoWork));
                 thread.Name = this.TaskName;
+                thread.Priority = ThreadPriority.Highest;//工作线程和发布线程有最高的优先级
                 thread.Start();
                 Console.WriteLine(">>已经开启发布线程！-- ThreadId:{0} --", thread.ManagedThreadId);
             }
@@ -347,6 +356,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             isRunning = false;
             //清理服务对象
             ClearServiceObjectCache();
+            PublisherFactory.Instance.RemovePublisher(this.Context.Request.ServiceUrl);
         }
 
         /// <summary>
@@ -363,8 +373,8 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                 //检查超期
                 if (!self.CheckActiveLife())
                 {
-                    self.Close();
-                    PublisherFactory.Instance.RemovePublisher(self.TaskName);
+                    isRunning = false;
+                    //self.Close(); 应该在清理完成服务对象后，再清理服务上下文对象
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\r\n[{0}]当前任务已检验到事件源对象为非活动状态，工作线程退出--Task Name: {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), this.GetShortTaskName(255));
                     Console.ResetColor();
@@ -404,6 +414,8 @@ namespace PWMIS.EnterpriseFramework.Service.Host
             isRunning = false;
             //清理服务对象
             ClearServiceObjectCache();
+            PublisherFactory.Instance.RemovePublisher(this.Context.Request.ServiceUrl);
+            self.Close();
         }
 
         protected string CallService(ServiceContext context)
@@ -781,8 +793,8 @@ namespace PWMIS.EnterpriseFramework.Service.Host
         public bool Contains(ServiceContext context)
         {
             ServiceRequest request = context.Request;
-            bool sessionRequired = context.SessionRequired;
-            ServicePublisher pub = null;
+            //bool sessionRequired = context.SessionRequired;
+            //ServicePublisher pub = null;
             string key = request.ServiceUrl;
             return dict.ContainsKey(key);
         }
@@ -833,13 +845,16 @@ namespace PWMIS.EnterpriseFramework.Service.Host
                     }
                 }
             }
-            pub.AddProcessedRequest(request);
+            //pub.AddProcessedRequest(request);
             return pub;
         }
 
         public void RemovePublisher(string key)
         {
-            dict.Remove(key);
+            lock (_syncLock)
+            { 
+                dict.Remove(key);
+            }
         }
 
         /// <summary>

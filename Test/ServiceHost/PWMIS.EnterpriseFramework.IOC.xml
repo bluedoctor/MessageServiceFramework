@@ -139,9 +139,10 @@
         </member>
         <member name="M:PWMIS.EnterpriseFramework.IOC.Unity.GetInstanceList``1">
             <summary>
-            从所有容器中寻找符合当前指定类型（接口）的 提供程序列表
+            从所有容器中寻找继承当前指定类型（或接口）的 提供程序列表。
+            如果是接口，则需要在SystemInterface 配置节配置；如果没有配置，则需要在GroupSet下面的配置项中使用InterfaceName 使用接口类型的全名称。
             </summary>
-            <typeparam name="T">指定类型（接口）</typeparam>
+            <typeparam name="T">指定类型（或接口）</typeparam>
             <returns>提供程序列表</returns>
         </member>
         <member name="M:PWMIS.EnterpriseFramework.IOC.Unity.GetInstanceList(System.String)">
