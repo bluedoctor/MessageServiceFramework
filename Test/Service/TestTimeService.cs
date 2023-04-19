@@ -21,7 +21,7 @@ namespace ServiceSample
         /// 供订阅使用的获取服务器时间的方法
         /// </summary>
         /// <returns></returns>
-        public TimeCount ServerTime()
+        public TimeCount ServerTime(int index)
         {
             if (base.CurrentContext.User != null)
             {
@@ -31,6 +31,7 @@ namespace ServiceSample
             {
                 Console.WriteLine("No User.");
             }
+            tc.Index = index;
             tc.Execute();
             return tc;
         }

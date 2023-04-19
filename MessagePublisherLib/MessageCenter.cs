@@ -244,7 +244,7 @@ namespace MessagePublisher
             {
                 if (this._listeners.Remove(listener))
                 {
-                    string keyFlag = listener.FromIP + ":" + listener.FromPort;
+                    string keyFlag = listener.FromIP + "&" + listener.FromPort;
                     foreach (string key in _userIdentity.Keys)
                     {
                         if (key.Contains(keyFlag))

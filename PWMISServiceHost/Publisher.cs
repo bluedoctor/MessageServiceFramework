@@ -911,6 +911,46 @@ namespace PWMIS.EnterpriseFramework.Service.Host
         private PublisherFactory() { }
 
         #endregion
+
+        /// <summary>
+        /// 从发布者中移除指定的消息监听器，用于解决客户端连接端口复用的问题
+        /// </summary>
+        /// <param name="listener"></param>
+        public void RemoveMessageListener(MessageListener listener)
+        {
+            lock (_syncLock)
+            {
+                foreach (var item in dict.AsEnumerable())
+                {
+                    var publisher = item.Value;
+                    if (publisher.SubscriberInfoList.Count > 0)
+                    {
+                        RemoveSubscriberInfo(publisher, listener);
+                    }
+                }
+            }
+        }
+
+        private void RemoveSubscriberInfo(ServicePublisher publisher, MessageListener listener)
+        {
+            var SubscriberInfoList = publisher.SubscriberInfoList;
+            List<SubscriberInfo> list = new List<SubscriberInfo>();
+           
+            while (!SubscriberInfoList.IsEmpty)
+            {
+                if (SubscriberInfoList.TryTake(out SubscriberInfo item))
+                {
+                    if (item.FromIP == listener.FromIP && item.FromPort == listener.FromPort)
+                        continue;
+                    else
+                        list.Add(item);
+                }
+            }
+            foreach (SubscriberInfo sub in list)
+            {
+                SubscriberInfoList.Add(sub);
+            }
+        }
     }
 
 

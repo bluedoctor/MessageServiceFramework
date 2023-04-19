@@ -183,7 +183,10 @@ namespace WinClient
         private void btnServerTime_Click(object sender, EventArgs e)
         {
             //for (int i = 0; i < 10; i++)
-                SubscribeTime(0);
+            if (int.TryParse(txtA.Text, out int index))
+            { 
+                SubscribeTime(index);
+            }
         }
 
         private void SubscribeTime(int index)
@@ -191,14 +194,25 @@ namespace WinClient
             ServiceRequest request = new ServiceRequest();
             request.ServiceName = "TestTimeService";
             request.MethodName = "ServerTime";
+            request.Parameters = new object[] { index };
 
             //异步方式测试
-            Proxy serviceProxy = new Proxy();
-            serviceProxy.RegisterData = "reg1111";
-          
-            serviceProxy.SetActorInstance("aaaa", 10);
-            serviceProxy.ErrorMessage += new EventHandler<MessageSubscriber.MessageEventArgs>(serviceProxy_ErrorMessage);
-            serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
+            Proxy serviceProxy;
+            if (this.CurrentProxy == null)
+            {
+                serviceProxy = new Proxy();
+                serviceProxy.SetActorInstance("aaaa", 10);
+                serviceProxy.ErrorMessage += new EventHandler<MessageSubscriber.MessageEventArgs>(serviceProxy_ErrorMessage);
+                serviceProxy.ServiceBaseUri = this.txtSerivceUri.Text;
+                serviceProxy.ServiceClosed += ServiceProxy_ServiceClosed;
+                serviceProxy.RegisterData = "reg1111";
+                this.CurrentProxy = serviceProxy;
+            }
+            else
+            {
+                serviceProxy = this.CurrentProxy;
+            }
+           
             int msgId = serviceProxy.Subscribe<TimeCount>(request, DataType.Json, (converter) =>
             {
                 if (converter.Succeed)
@@ -206,13 +220,15 @@ namespace WinClient
                     MyInvoke(this, () =>
                     {
                         //this.lblResult.Text = converter.Result.Count.ToString() + "--" + converter.Result.Now.ToString();
-                        string msg = index + "--" + converter.Result.Count.ToString() + "--" + converter.Result.Now.ToString();
+                        string msg = converter.Result.Index + "--" + converter.Result.Count.ToString() + "--" + converter.Result.Now.ToString();
                         System.Diagnostics.Debug.WriteLine( msg);
                         this.lblResult.Text = msg;
                         if (converter.Result.Count > 50)
                         {
                             serviceProxy.Close();
                             this.btnServerTime.Enabled = true;
+                            MessageBox.Show("客户端连接已经断开！");
+                            
                         }
                     });
                 }
@@ -228,9 +244,15 @@ namespace WinClient
             else
             {
                 this.btnServerTime.Enabled = false;
+                MessageBox.Show("Message Id:" + msgId);
             }
             this.lblResult.Text = "sub " + index;
-            this.CurrentProxy = serviceProxy;
+           
+        }
+
+        private void ServiceProxy_ServiceClosed(object sender, EventArgs e)
+        {
+            MessageBox.Show("服务端已经关闭订阅连接！");
         }
 
         void serviceProxy_ErrorMessage(object sender, MessageSubscriber.MessageEventArgs e)

@@ -75,7 +75,7 @@ namespace PWMIS.EnterpriseFramework.Common.Encrypt
             string result = string.Empty;
             foreach (byte b in bytes)
             {
-                result += b.ToString("x");
+                result += b.ToString("x2");
             }
             return result;
         }

@@ -17,6 +17,8 @@ namespace Model
         /// </summary>
         public int Count { get; set; }
 
+        public int Index { get; set; }
+
 
         public void Execute()
         {

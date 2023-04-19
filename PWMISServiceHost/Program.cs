@@ -430,6 +430,7 @@ namespace PWMIS.EnterpriseFramework.Service.Host
         {
             string text= string.Format("[{0}]取消订阅-- From: {1}:{2}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), e.Listener.FromIP, e.Listener.FromPort);
             Console.WriteLine(text);
+            PublisherFactory.Instance.RemoveMessageListener(e.Listener);
             WriteLogFile("MSFListenerLog" + DateTime.Now.ToString("yyyyMMdd") + ".txt", text);
         }
 
