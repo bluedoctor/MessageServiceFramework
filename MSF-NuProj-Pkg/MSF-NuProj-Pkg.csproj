@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>MSF_NuProj_Pkg</RootNamespace>
     <AssemblyName>MSF-NuProj-Pkg</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
